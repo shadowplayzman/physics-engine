@@ -9,8 +9,10 @@
 #include<glm/gtc/type_ptr.hpp>
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
-
 #include"ShaderClass.h"
+
+class CelestialBody;
+
 class Camera {
 public:
 	glm::vec3 Position;
@@ -22,6 +24,7 @@ public:
 	int width;
 	int height;
 
+	//checks if this is the first click 
 	bool firstClick = true;
 	float speed = 0.1f;
 	float sensitivity = 100.0f;
@@ -36,6 +39,9 @@ public:
 	void Matrix(Shader& shader, const char* uniform);
 	void ProccessScroll(double offset);
 	void Inputs(GLFWwindow* window);
+	void SetTarget(CelestialBody* body);
+private:
+	CelestialBody* targetBody = nullptr;
 };
 
 

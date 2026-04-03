@@ -1,5 +1,6 @@
 #include"CelestialBody.h"
 
+//gives mass and radius to the body
 CelestialBody::CelestialBody(double mass,double radius) {
 	this->mass = mass;
 	this->radius = radius;

@@ -69,42 +69,40 @@ int main() {
 	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");;
 
-	Shader lightShader("light.vert", "light.frag");
+	// running the shaders for the trails
 	Shader trailShader("trail.vert", "trail.frag");
 
+	//creating an object to use trailRender
 	TrailRenderer trailRenderer;
 
-
+	//defining the color position for the lights
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::mat4 lightmodel = glm::mat4(1.0f);
 	lightmodel = glm::translate(lightmodel, lightPos);
 
 
-	
+	//getiing the location of the uniforms for light pos and colour
 	shaderProgram.Activate();
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-
+	//enabled this to allow opengl to render objects with depth
 	glEnable(GL_DEPTH_TEST);
 
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f,150.0f));
+	//allow us to scroll to zoom in and out
 	glfwSetWindowUserPointer(window, &camera);
 	glfwSetScrollCallback(window, ScrollCallback);
 
+	//creating a mesh to render all the the spheres
 	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
-	
 
-	
-
-	//positions
-	//velovity
-
-
-
-
+	//calling the function to create the solar sytem
 	SolarSystemFactory::CreateSolarSystem(universe, sphereMesh);
+
+	//allows to orbit the camera around an object in the universe class
+	camera.SetTarget(universe.GetBody(5));
 
 	double lastFrame = glfwGetTime();
 	//main loop
@@ -112,6 +110,8 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		//get and handle user inputs
 		glfwPollEvents();
+
+		//calculating dt by subrating last frame from current frame
 		double currentFrame = glfwGetTime();
 		double dt = (currentFrame - lastFrame)*Constants::Rendering::Timescale;
 		lastFrame = currentFrame;
@@ -119,13 +119,16 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+		//updating the universe to all ohysics
 		universe.Update(dt);
-		//use the shader program ,bind the array,and the draw the triangle
 
+		//allows to control camera
 		camera.Inputs(window);
+		//defining the fov,near angle and far angle fot the camera
 		camera.updateMatrix(90.0f, 0.1f, 100000.0f);
 		shaderProgram.Activate(); 
 
+		//geting each body from the universe and rendering it also rendering its trail
 		for (CelestialBody* body : universe.bodies) {
 			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius, body->visualScale);
 			trailRenderer.Draw(*body, trailShader, camera);
