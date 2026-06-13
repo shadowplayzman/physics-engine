@@ -31,19 +31,25 @@ int main() {
 	//set up window properties
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	//defining the vertices of the triangle
 	GLfloat vertices[] = {
 
-		-0.5f,-0.5f * float(sqrt(3))/3,0.0f,
-		0.5f,-0.5f * float(sqrt(3)) / 3,0.0f,
-		0.0f,0.5f * float(sqrt(3)) *2 / 3,0.0f,
+		-0.5f  ,-0.5f * float(sqrt(3))  / 3,0.0f,//lower left conrer
+		 0.5f  ,-0.5f * float(sqrt(3))  / 3,0.0f,//lower right corner
+		-0.5f  , 0.5f * float(sqrt(3)) * 2 / 3,0.0f,//upper left corner
+		 0.5f  , 0.5f * float(sqrt(3))  * 2 / 3,0.0f,//upper right corner
+	};
+
+	GLuint indices[] = {
+		0,1,2,
+		3,2,1
 	};
 
 	// create window
-	GLFWwindow* window = glfwCreateWindow(width, height, "Physics Engine",NULL,NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, "Physics Engine", NULL, NULL);
 
 	if (!window) {
 		std::cout << "failed to create window" << "\n";
@@ -52,7 +58,7 @@ int main() {
 	}
 
 	//Get frame buffer size
-	int bufferwidth=800, bufferheight=800;
+	int bufferwidth = 800, bufferheight = 800;
 	glfwGetFramebufferSize(window, &bufferwidth, &bufferheight);
 
 	//set context
@@ -74,7 +80,7 @@ int main() {
 
 	// defining the vertex shader 
 	GLuint vertexshader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexshader, 1, &vertexShaderSource,NULL);
+	glShaderSource(vertexshader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexshader);
 
 	// defining the fragment shader 
@@ -95,11 +101,12 @@ int main() {
 	glDeleteShader(fragmentShader);
 
 	//creating the vertix array object and buffer object
-	GLuint VAO,VBO;
+	GLuint VAO, VBO, EBO;
 
 	// use the values of vetex array and buffer into vao and vbo
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
 	glBindVertexArray(VAO);
 
@@ -107,18 +114,22 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	//data for the vertex array
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 
 	//main loop
-	
-	
+
+
 	while (!glfwWindowShouldClose(window)) {
 		//get and handle user inputs
 		glfwPollEvents();
@@ -129,10 +140,11 @@ int main() {
 		//use the shader program ,bind the array,and the draw the triangle
 		glUseProgram(ShaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
 		glfwSwapBuffers(window);
 
-		
+
 	}
 
 
@@ -140,7 +152,8 @@ int main() {
 
 	//cleanup
 	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1,  &VBO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(ShaderProgram);
 	glfwDestroyWindow(window);
 	glfwTerminate();
