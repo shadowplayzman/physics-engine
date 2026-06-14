@@ -99,6 +99,7 @@ int main() {
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
+		glUniform1f(uniID,0.5f);
 		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
