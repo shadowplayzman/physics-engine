@@ -30,18 +30,20 @@ int main() {
 
 	//defining the vertices of the triangle
 	GLfloat vertices[] = {
-    -0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower left corner
-	 0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower right corner
-	 0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,     1.0f, 0.6f,  0.32f, // Upper corner
-	-0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner left
-	 0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner right
-	 0.0f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f  // Inner down
+		//       cordinates								/  colors		
+		-0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8 ,0.3f,  0.02f,//lower left conrer
+		 0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f,//lower right corner
+		 0.0f  , 0.5f * float(sqrt(3))  * 2 / 3,0.0f,    0.0f,0.6f , 0.32f,//upper corner
+		-0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner left 
+		 0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner right 
+		 0.0f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f //inner down
+
 	};
 
 	GLuint indices[] = {
-	  0, 3, 5, // Lower left triangle
-	  3, 2, 4, // Lower right triangle
-	  5, 4, 1 // Upper triangle
+		0,3,5,
+		3,2,4,
+		5,4,1
 	};
 
 	// create window
@@ -74,11 +76,14 @@ int main() {
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
 
+	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
 
+	//bindin vao1
 	VAO VAO1;
 	VAO1.Bind();
 
+	//refrencing vertices to VBO EBO
 	VBO VBO1(vertices, sizeof(vertices));
 	EBO EBO1(indices, sizeof(indices));
 	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);

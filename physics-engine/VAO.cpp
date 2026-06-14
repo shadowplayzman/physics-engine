@@ -1,16 +1,16 @@
 #include"VAO.h"
 
-// Constructor that generates a VAO ID
+//definging VOA function
 VAO::VAO()
 {
+	//the voa funtion when called will the gen vertx funtion and pass id variable as argument
 	glGenVertexArrays(1, &ID);
 }
 
-// Links a VBO Attribute such as a position or color to the VAO
-void VAO::LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset)
+void VAO::LinkAtrtrib(VBO VBO, GLuint layout, GLuint numcomponents, GLenum type, GLsizeiptr stride, void* offset)
 {
 	VBO.Bind();
-	glVertexAttribPointer(layout, numComponents, type, GL_FALSE, stride, offset);
+	glVertexAttribPointer(layout,numcomponents, type, GL_FALSE,stride, offset);
 	glEnableVertexAttribArray(layout);
 	VBO.Unbind();
 }
