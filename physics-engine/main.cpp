@@ -1,6 +1,8 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include<stb_image.h>
+
 
 #include"EBO.h"
 #include"ShaderClass.h"
@@ -31,19 +33,16 @@ int main() {
 	//defining the vertices of the triangle
 	GLfloat vertices[] = {
 		//       cordinates								/  colors		
-		-0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8 ,0.3f,  0.02f,//lower left conrer
-		 0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f,//lower right corner
-		 0.0f  , 0.5f * float(sqrt(3))  * 2 / 3,0.0f,    0.0f,0.6f , 0.32f,//upper corner
-		-0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner left 
-		 0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner right 
-		 0.0f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f //inner down
+		-0.5f  ,-0.5f  ,0.0f,    1.0f,0.0f , 0.0f,//lower left conrer
+		-0.5f  ,0.5f   ,0.0f,    0.0f,1.0f , 0.0f,//upper left corner
+		 0.5f  , 0.5f  ,0.0f,    0.0f,0.0f , 1.0f,//upper right
+		 0.5f  ,-0.5f  ,0.0f,    1.0f,1.0f , 1.0f //lower left corner
 
 	};
 
 	GLuint indices[] = {
-		0,3,5,
-		3,2,4,
-		5,4,1
+				0,2,1,
+				0,3,2
 	};
 
 	// create window
@@ -75,10 +74,8 @@ int main() {
 
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
-
 	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
-
 	//bindin vao1
 	VAO VAO1;
 	VAO1.Bind();
@@ -108,7 +105,7 @@ int main() {
 		shaderProgram.Activate();
 		glUniform1f(uniID,0.5f);
 		VAO1.Bind();
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 

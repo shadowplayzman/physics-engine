@@ -69,21 +69,38 @@ void Shader::Delete() {
 	glDeleteProgram(ID);
 }
 
-void Shader::compileErrors(unsigned int shader, const char* type) {
-	GLint hasCompiled;
-	char infolog[1024];
-	if (type != "program") {
-		glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
-		if (hasCompiled == GL_FALSE) {
-			glGetShaderInfoLog(shader, 1024, NULL, infolog);
-			std::cout << "SHADER_COMPILATION_ERROR for:" << type << "\n" << infolog << "\n " << std::endl;
+void Shader::compileErrors(unsigned int object, const char* type)
+{
+	GLint success;
+	char infoLog[1024];
+
+	if (std::string(type) != "PROGRAM")
+	{
+		glGetShaderiv(object, GL_COMPILE_STATUS, &success);
+
+		if (!success)
+		{
+			glGetShaderInfoLog(object, 1024, NULL, infoLog);
+
+			std::cout
+				<< type
+				<< " SHADER COMPILATION ERROR:\n"
+				<< infoLog
+				<< std::endl;
 		}
-		else {
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
-			if (hasCompiled == GL_FALSE) {
-				glGetShaderInfoLog(shader, 1024, NULL, infolog);
-				std::cout << "SHADER_LINKING_ERROR for:" << type << "\n" << infolog << "\n " << std::endl;
-			}
+	}
+	else
+	{
+		glGetProgramiv(object, GL_LINK_STATUS, &success);
+
+		if (!success)
+		{
+			glGetProgramInfoLog(object, 1024, NULL, infoLog);
+
+			std::cout
+				<< "PROGRAM LINK ERROR:\n"
+				<< infoLog
+				<< std::endl;
 		}
 	}
 }
