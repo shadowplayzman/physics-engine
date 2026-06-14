@@ -10,7 +10,7 @@
 
 
 // size of the window
-const GLint width = 800, height = 600;
+const GLint width = 800, height = 800;
 
 
 int main() {
@@ -30,16 +30,20 @@ int main() {
 
 	//defining the vertices of the triangle
 	GLfloat vertices[] = {
+		//       cordinates								/  colors		
+		-0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8 ,0.3f,  0.02f,//lower left conrer
+		 0.5f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f,//lower right corner
+		 0.0f  , 0.5f * float(sqrt(3))  * 2 / 3,0.0f,    0.0f,0.6f , 0.32f,//upper corner
+		-0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner left 
+		 0.25f , 0.5f * float(sqrt(3))  / 6    ,0.0f,    0.1f,0.45f,0.77f,//inner right 
+		 0.0f  ,-0.5f * float(sqrt(3))  / 3    ,0.0f,    0.8f,0.3f , 0.02f //inner down
 
-		-0.5f  ,-0.5f * float(sqrt(3))  / 3,0.0f,//lower left conrer
-		 0.5f  ,-0.5f * float(sqrt(3))  / 3,0.0f,//lower right corner
-		-0.5f  , 0.5f * float(sqrt(3)) * 2 / 3,0.0f,//upper left corner
-		 0.5f  , 0.5f * float(sqrt(3))  * 2 / 3,0.0f,//upper right corner
 	};
 
 	GLuint indices[] = {
-		0,1,2,
-		3,2,1
+		0,3,5,
+		3,2,4,
+		5,4,1
 	};
 
 	// create window
@@ -72,20 +76,30 @@ int main() {
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
 
+	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
 
+	//bindin vao1
 	VAO VAO1;
 	VAO1.Bind();
 
+	//refrencing vertices to VBO EBO
 	VBO VBO1(vertices, sizeof(vertices));
 	EBO EBO1(indices, sizeof(indices));
 
-	VAO1.LinkVBO(VBO1, 0);
+	//unbinding everything
+	VAO1.LinkAtrtrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
+	VAO1.LinkAtrtrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	VAO1.Unbind();
 	VBO1.Unbind();
-	EBO1.Unbind();
+	
 	
 
+
+	GLuint uniID = glGetUniformLocation(shaderProgram.ID,"scale");
+
+	float lastTime = 0.0f;
+	float scale = 0.0f;
 
 	//main loop
 
@@ -99,8 +113,13 @@ int main() {
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
+		if (glfwGetTime() - lastTime > 1.0f / 60.0f) {
+			scale += 0.05f;
+			lastTime = glfwGetTime();
+		}
+		glUniform1f(uniID, sin(scale));
 		VAO1.Bind();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 

@@ -1,5 +1,6 @@
 #include "VBO.h"
 
+//calling the vbo class
 VBO::VBO(GLfloat* vertices, GLsizeiptr size)
 {
 
