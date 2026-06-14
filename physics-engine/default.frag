@@ -1,6 +1,8 @@
 #version 330 core
 out vec4 Fragcolor;
+in vec3 color;
+uniform float scale;
 void main()
 {
-Fragcolor = vec4(0.8f, 0.3f, 0.02f, 1.0f);
+Fragcolor = vec4(color, 1.0f);
 }
