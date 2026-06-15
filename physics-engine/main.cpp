@@ -7,6 +7,7 @@
 
 #include"Texture.h" 
 #include"EBO.h"
+#include"Circle.h"
 #include"ShaderClass.h"
 #include"VAO.h"
 #include"VBO.h"
@@ -16,11 +17,7 @@
 const GLint width = 800, height = 800;
 
 // velocity  and accleration
-float circleY = 0.0f;
-float velocityY = 0.0f;
-float circleX = 0.0f;
-float velocityX = 0.2f;
-float radius = 0.15f;
+
 float dt = 1.0f / 60.0f;
 const float gravity = -0.005f;
 
@@ -130,6 +127,7 @@ int main() {
 	glViewport(0, 0, bufferwidth, bufferheight);
 	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
+	Circle ball(0.0f, 0.0f, 0.15f);
 	//bindin vao1
 	VAO VAO1;
 	VAO1.Bind();
@@ -159,48 +157,28 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		bool onground = (circleY - radius <= -0.65f + 0.001f);
+		bool onground = (ball.y - ball.radius <= -0.65f + 0.001f);
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
-		velocityY += gravity*dt;
-		circleY += velocityY*dt;
-		circleX += velocityX * dt;
-		velocityX *= 0.99995f;
-		// floor
-		if (circleY - radius < -0.65f)
-		{
-			circleY = -0.65f + radius;
-			velocityY *= -0.8f;
-		}
-
-		// left wall
-		if (circleX - radius < -0.65f)
-		{
-			circleX = -0.65f + radius;
-			velocityX *= -0.8f;
-		}
-
-		// right wall
-		if (circleX + radius > 0.65f)
-		{
-			circleX = 0.65f - radius;
-			velocityX *= -0.8f;
-		}
+		ball.ApplyGravity(gravity,dt);
+		ball.update(dt);
+		ball.checkWallCollision(-0.65f, 0.65f, 0.65f, -0.65f);
+		
 
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			velocityX -= 0.001f;
+			ball.vx -= 0.001f;
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			velocityX += 0.001f;
+			ball.vx += 0.001f;
 		}
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS  &&onground) {
-			velocityY = 0.05f;
+			ball.vy = 0.05f;
 		}
 
 
-		glUniform2f(offsetLoc, circleX, circleY);
+		glUniform2f(offsetLoc, ball.x, ball.y);
 		gojo.Bind();
 		VAO1.Bind();
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
