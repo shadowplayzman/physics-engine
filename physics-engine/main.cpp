@@ -1,14 +1,13 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include<stb_image.h>
+#include <stb_image.h>
 
 
 #include"EBO.h"
 #include"ShaderClass.h"
 #include"VAO.h"
 #include"VBO.h"
-// source code for the shaders
 
 
 // size of the window
@@ -34,7 +33,7 @@ int main() {
 	GLfloat vertices[] = {
 		//       cordinates								/  colors		
 		-0.5f  ,-0.5f  ,0.0f,    1.0f,0.0f , 0.0f,    0.0f,0.0f,//lower left conrer
-		-0.5f  ,0.5f   ,0.0f,    0.0f,1.0f , 0.0f,    0.0f,1.0f,//upper left corner
+		-0.5f  , 0.5f  ,0.0f,    0.0f,1.0f , 0.0f,    0.0f,1.0f,//upper left corner
 		 0.5f  , 0.5f  ,0.0f,    0.0f,0.0f , 1.0f,    1.0f,1.0f,//upper right
 		 0.5f  ,-0.5f  ,0.0f,    1.0f,1.0f , 1.0f,    1.0f,0.0f,//lower left corner
 
@@ -94,14 +93,17 @@ int main() {
 
 	//textures
 	int widthImg, heightImg, numColch;
+	//flips the image
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* bytes = stbi_load("gojo.png",&widthImg,&heightImg,&numColch,4);
 
+	//generate and binding the texture to the variable
 	GLuint texture;
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
+	//gl nearest preseves the pixels and linear generate pixels based on the existing pixels
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
