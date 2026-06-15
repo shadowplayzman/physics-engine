@@ -32,7 +32,7 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 	GLuint vertexshader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexshader, 1, &vertexSource, NULL);
 	glCompileShader(vertexshader);
-	//compileErrors(vertexshader, "VERTEX");
+	compileErrors(vertexshader, "VERTEX");
 
 	// Create Fragment Shader Object and get its reference
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -40,7 +40,7 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
 	// Compile the Vertex Shader into machine code
 	glCompileShader(fragmentShader);
-	//compileErrors(fragmentShader, "FRAGMENT");
+	compileErrors(fragmentShader, "FRAGMENT");
 
 	// Create Shader Program Object and get its reference
 	ID = glCreateProgram();
