@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
-
+#include"Texture.h" 
 #include"EBO.h"
 #include"ShaderClass.h"
 #include"VAO.h"
@@ -92,35 +92,9 @@ int main() {
 	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
 	//textures
-	int widthImg, heightImg, numColch;
-	//flips the image
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load("gojo.png",&widthImg,&heightImg,&numColch,4);
+	Texture gojo("gojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	gojo.texunit(shaderProgram, "tex0", 0);
 
-	//generate and binding the texture to the variable
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	//gl nearest preseves the pixels and linear generate pixels based on the existing pixels
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-
-	GLuint tex0Uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-	shaderProgram.Activate();
-	glUniform1i(tex0Uni,0);
-
-	stbi_image_free(bytes);
-	glBindTexture(GL_TEXTURE_2D, 0);
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
@@ -133,7 +107,7 @@ int main() {
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
 		glUniform1f(uniID,0.5f);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		gojo.Bind();
 		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -149,7 +123,7 @@ int main() {
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
-	glDeleteTextures(1, &texture);
+	gojo.Delete();
 	shaderProgram.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();
