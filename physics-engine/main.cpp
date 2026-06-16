@@ -20,7 +20,7 @@ const GLint width = 800, height = 800;
 
 float dt = 1.0f / 60.0f;
 const float gravity = -0.005f;
-
+float floorfriction = 0.2f;
 std::vector<Circle> balls;
 
 int main() {
@@ -91,9 +91,9 @@ int main() {
 	}
 
 
-	balls.push_back(Circle(0.0f, 0.0f, 0.25f));
-	balls.push_back(Circle(0.3f, 0.3f, 0.15f));
-	balls.push_back(Circle(-0.3f, 0.4f, 0.35f));
+	balls.push_back(Circle(0.0f, 0.0f, 0.055f));
+	balls.push_back(Circle(0.3f, 0.3f, 0.045f));
+	balls.push_back(Circle(-0.3f, 0.4f, 0.085f));
 
 	balls[0].vx = 0.2f;
 	balls[1].vx = -0.2f;
@@ -162,12 +162,29 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		bool onground = (balls[0].y - balls[0].radius <= -0.65f + 0.001f);
+		bool onground = (balls[0].y - balls[0].radius <= -1.0f + 0.001f);
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
 		for (Circle& ball : balls) {
 			ball.ApplyGravity(gravity, dt);
+			if (onground == true) {
+				float friction = floorfriction * fabs(gravity);
+
+				if (ball.vx > 0) {
+					ball.vx -= friction * dt;
+					if (ball.vx == 0) {
+						ball.vx = 0;
+					}
+				}
+				if (ball.vy > 0) {
+					ball.vy -= friction * dt;
+					if (ball.vy == 0) {
+						ball.vy = 0;
+					}
+				}
+			}
+
 			ball.update(dt);
 			ball.checkWallCollision(-1.0f, 1.0f, 1.0f, -1.0f);
 
