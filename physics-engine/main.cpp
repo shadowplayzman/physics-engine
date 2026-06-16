@@ -91,9 +91,9 @@ int main() {
 	}
 
 
-	balls.push_back(Circle(0.0f, 0.0f, 0.15f));
+	balls.push_back(Circle(0.0f, 0.0f, 0.25f));
 	balls.push_back(Circle(0.3f, 0.3f, 0.15f));
-	balls.push_back(Circle(-0.3f, 0.4f, 0.15f));
+	balls.push_back(Circle(-0.3f, 0.4f, 0.35f));
 
 	balls[0].vx = 0.2f;
 	balls[1].vx = -0.2f;
@@ -182,6 +182,7 @@ int main() {
 				float dx = B.x - A.x;
 				float dy = B.y - A.y;
 
+
 				float distance = sqrt(dx * dx + dy * dy);
 
 
@@ -189,20 +190,22 @@ int main() {
 					float overlap = (A.radius + B.radius) - distance;
 					float nx = dx / distance;
 					float ny = dy / distance;
-					float tempX = A.vx;
-					float tempY = A.vy;
+					float totalMass = A.mass + B.mass;
+					float newvxA= ((A.mass - B.mass) * A.vx + 2 * B.mass * B.vx) / (totalMass);
+					float newvxB = ((B.mass - A.mass) * B.vx + 2 * A.mass * A.vx) / (totalMass);
 
-					A.x -= nx * overlap * 0.5;
-					A.y -= ny * overlap * 0.5;
 
-					B.x += nx * overlap * 0.5;
-					B.y += ny * overlap * 0.5;
+					A.x -= nx * overlap * (B.mass/totalMass);
+					A.y -= ny * overlap * (B.mass / totalMass);
 
-					A.vx =B.vx;
-					A.vy = B.vy;
+					B.x += nx * overlap * (B.mass / totalMass);
+					B.y += ny * overlap * (B.mass / totalMass);
 
-					B.vx = tempX;
-					B.vy = tempY;
+					A.vx = newvxA;
+					
+
+					B.vx = newvxB;
+					
 				}
 			}
 		}

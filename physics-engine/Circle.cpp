@@ -8,6 +8,7 @@ Circle::Circle(float startX,float startY,float startRadius) {
 	vy = 0.0f;
 
 	radius = startRadius;
+    mass = radius*radius;
 }
 
 void Circle::ApplyGravity(float gravity, float dt) {

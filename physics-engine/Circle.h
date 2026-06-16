@@ -3,13 +3,13 @@
 
 class Circle {
 public:
-	float x;
-	float y;
+	float x,y;
 
-	float vx;
-	float vy;
-	
+
+	float vx,vy;
+
 	float radius;
+	float mass;
 
 	Circle(float startX, float startY, float startRadius);
 	void update(float dt);
