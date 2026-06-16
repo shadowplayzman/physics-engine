@@ -17,10 +17,8 @@
 const GLint width = 800, height = 800;
 
 // velocity  and accleration
-
-float dt = 1.0f / 60.0f;
-const float gravity = -0.005f;
-float floorfriction = 0.2f;
+const float gravity = -9.8f;
+float floorfriction = 0.4f;
 std::vector<Circle> balls;
 
 int main() {
@@ -93,11 +91,11 @@ int main() {
 
 	balls.push_back(Circle(0.0f, 0.0f, 0.055f));
 	balls.push_back(Circle(0.3f, 0.3f, 0.045f));
-	balls.push_back(Circle(-0.3f, 0.4f, 0.085f));
+	balls.push_back(Circle(-0.3f, -1.0f, 0.085f));
 
-	balls[0].vx = 0.2f;
-	balls[1].vx = -0.2f;
-	balls[2].vx = 0.1f;
+	balls[0].vx = 0.8f;
+	balls[1].vx = -0.8f;
+	balls[2].vx = 0.0f;
 
 
 
@@ -117,6 +115,7 @@ int main() {
 
 	//set context
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(5);
 
 	//Init GLew
 	glewExperimental = GL_TRUE;
@@ -153,6 +152,8 @@ int main() {
 	Texture gojo("gojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	gojo.texunit(shaderProgram, "tex0", 0);
 
+	float lastFrame = glfwGetTime();
+
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
@@ -161,6 +162,11 @@ int main() {
 		//clear buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		float currentFrame = glfwGetTime();
+		float dt = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 
 		bool onground = (balls[0].y - balls[0].radius <= -1.0f + 0.001f);
 
@@ -208,8 +214,11 @@ int main() {
 					float nx = dx / distance;
 					float ny = dy / distance;
 					float totalMass = A.mass + B.mass;
-					float newvxA= ((A.mass - B.mass) * A.vx + 2 * B.mass * B.vx) / (totalMass);
-					float newvxB = ((B.mass - A.mass) * B.vx + 2 * A.mass * A.vx) / (totalMass);
+	
+					float rvx = A.vx - B.vx;
+					float rvy = A.vy - B.vy;
+
+					float velAlongNormal = rvx * nx + rvy * ny;
 
 
 					A.x -= nx * overlap * (B.mass/totalMass);
@@ -218,10 +227,22 @@ int main() {
 					B.x += nx * overlap * (B.mass / totalMass);
 					B.y += ny * overlap * (B.mass / totalMass);
 
-					A.vx = newvxA;
-					
+					if (velAlongNormal < 0) {
+						float e = 0.8f;
 
-					B.vx = newvxB;
+						float j = -(1.0f + e) * velAlongNormal;
+
+						j /= (1 / A.mass) + (1 / B.mass);
+
+						float impluseX = j * nx;
+						float impluseY = j * ny;
+
+						A.vx -= impluseX / A.mass;
+						A.vy -= impluseY / A.mass;
+
+						B.vx -= impluseX / B.mass;
+						B.vy -= impluseY / B.mass;
+					}
 					
 				}
 			}
