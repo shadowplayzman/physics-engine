@@ -11,7 +11,10 @@ uniform float scale;
 uniform vec2 offset;
 void main()
 {
-gl_Position = vec4(position.x+offset.x, position.y+offset.y, position.z, 1.0);
+gl_Position = vec4(position.x*scale+offset.x, 
+				   position.y*scale+offset.y, 
+				   position.z, 
+				   1.0);
 color=acolor;
 texCoord=aTex;
 }

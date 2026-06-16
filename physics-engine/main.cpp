@@ -21,6 +21,7 @@ const GLint width = 800, height = 800;
 float dt = 1.0f / 60.0f;
 const float gravity = -0.005f;
 
+std::vector<Circle> balls;
 
 int main() {
 
@@ -72,8 +73,8 @@ int main() {
 	for (int i = 0;i <= segments;i++) {
 		float angle = 2.0f * 3.14159 * i / segments;
 
-		float x = 0.5f * cos(angle);
-		float y = 0.5f * sin(angle);
+		float x =cos(angle);
+		float y = sin(angle);
 
 		vertices.push_back(x);
 		vertices.push_back(y);
@@ -83,14 +84,16 @@ int main() {
 		vertices.push_back(1.0f);
 		vertices.push_back(1.0f);
 
-		vertices.push_back(x+0.5);
-		vertices.push_back(y+0.5);
+		vertices.push_back((x + 1.0f) * 0.5f);
+		vertices.push_back((y + 1.0f) * 0.5f);
 
 
 	}
 
 
-
+	balls.push_back(Circle(0.0f, 0.0f, 0.15f));
+	balls.push_back(Circle(0.3f, 0.3f, 0.15f));
+	balls.push_back(Circle(-0.3f, 0.4f, 0.15f));
 
 
 
@@ -127,7 +130,6 @@ int main() {
 	glViewport(0, 0, bufferwidth, bufferheight);
 	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
-	Circle ball(0.0f, 0.0f, 0.15f);
 	//bindin vao1
 	VAO VAO1;
 	VAO1.Bind();
@@ -142,7 +144,7 @@ int main() {
 	VBO1.Unbind();
 	
 	//gets id of unifprm called scale
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+	GLuint scaleLoc = glGetUniformLocation(shaderProgram.ID, "scale");
 	GLuint offsetLoc = glGetUniformLocation(shaderProgram.ID, "offset");
 	//textures
 	Texture gojo("gojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
@@ -157,32 +159,38 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		bool onground = (ball.y - ball.radius <= -0.65f + 0.001f);
+		bool onground = (balls[0].y - balls[0].radius <= -0.65f + 0.001f);
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
-		ball.ApplyGravity(gravity,dt);
-		ball.update(dt);
-		ball.checkWallCollision(-0.65f, 0.65f, 0.65f, -0.65f);
+		for (Circle& ball : balls) {
+			ball.ApplyGravity(gravity, dt);
+			ball.update(dt);
+			ball.checkWallCollision(-1.0f, 1.0f, 1.0f, -1.0f);
+
+		}
 		
 
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			ball.vx -= 0.001f;
+			balls[0].vx -= 0.001f;
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			ball.vx += 0.001f;
+			balls[0].vx += 0.001f;
 		}
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS  &&onground) {
-			ball.vy = 0.05f;
+			balls[0].vy = 0.05f;
 		}
 
 
-		glUniform2f(offsetLoc, ball.x, ball.y);
 		gojo.Bind();
 		VAO1.Bind();
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, segments + 2);
+		for (Circle& ball : balls) {
+			glUniform1f(scaleLoc, ball.radius);
+			glUniform2f(offsetLoc, ball.x, ball.y);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, segments + 2);
+		}
 		glfwSwapBuffers(window);
 
 		
