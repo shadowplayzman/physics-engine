@@ -95,6 +95,9 @@ int main() {
 	balls.push_back(Circle(0.3f, 0.3f, 0.15f));
 	balls.push_back(Circle(-0.3f, 0.4f, 0.15f));
 
+	balls[0].vx = 0.2f;
+	balls[1].vx = -0.2f;
+	balls[2].vx = 0.1f;
 
 
 
@@ -168,6 +171,40 @@ int main() {
 			ball.update(dt);
 			ball.checkWallCollision(-1.0f, 1.0f, 1.0f, -1.0f);
 
+		}
+
+		for (int i = 0;i < balls.size() ; i++) {
+			for (int j = i + 1;j < balls.size(); j++) {
+
+				Circle& A = balls[i];
+				Circle& B = balls[j];
+
+				float dx = B.x - A.x;
+				float dy = B.y - A.y;
+
+				float distance = sqrt(dx * dx + dy * dy);
+
+
+				if (distance < A.radius + B.radius&&distance>0.00001f) {
+					float overlap = (A.radius + B.radius) - distance;
+					float nx = dx / distance;
+					float ny = dy / distance;
+					float tempX = A.vx;
+					float tempY = A.vy;
+
+					A.x -= nx * overlap * 0.5;
+					A.y -= ny * overlap * 0.5;
+
+					B.x += nx * overlap * 0.5;
+					B.y += ny * overlap * 0.5;
+
+					A.vx =B.vx;
+					A.vy = B.vy;
+
+					B.vx = tempX;
+					B.vy = tempY;
+				}
+			}
 		}
 		
 
