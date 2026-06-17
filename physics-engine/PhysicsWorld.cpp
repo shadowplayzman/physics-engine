@@ -10,7 +10,7 @@ void PhysicsWorld::update(float dt) {
 	for (Circle& ball : balls) {
 		bool onground = (balls[0].y - balls[0].radius <= -1.0f + 0.001f);
 		float floorfriction = 0.4f;
-		ball.ApplyGravity(gravity, dt);
+		ball.AddForce(0.0f, gravity * ball.mass);
 		if (onground == true) {
 			float friction = floorfriction * fabs(gravity);
 

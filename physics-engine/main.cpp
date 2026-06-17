@@ -189,7 +189,6 @@ int main() {
 			world.balls[0].vy = 0.2f;
 		}
 
-
 		gojo.Bind();
 		VAO1.Bind();
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

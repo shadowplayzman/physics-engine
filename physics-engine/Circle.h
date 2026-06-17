@@ -8,15 +8,17 @@ public:
 
 	float vx,vy;
 
+	float fx, fy;
+
 	float radius;
 	float mass;
 
 	Circle(float startX, float startY, float startRadius);
 	void update(float dt);
 
-	void ApplyGravity(float gravity, float dt);
-
 	void checkWallCollision(float left, float right, float top, float bottom);
+
+	void AddForce(float ForceX, float ForceY);
 
 	void Draw();
 };
