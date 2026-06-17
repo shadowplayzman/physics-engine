@@ -8,6 +8,7 @@
 #include"Texture.h" 
 #include"EBO.h"
 #include"Circle.h"
+#include"PhysicsWorld.h"
 #include"ShaderClass.h"
 #include"VAO.h"
 #include"VBO.h"
@@ -18,8 +19,8 @@ const GLint width = 800, height = 800;
 
 // velocity  and accleration
 const float gravity = -9.8f;
-float floorfriction = 0.4f;
-std::vector<Circle> balls;
+
+PhysicsWorld world(gravity);
 
 int main() {
 
@@ -89,13 +90,13 @@ int main() {
 	}
 
 
-	balls.push_back(Circle(0.0f, 0.0f, 0.055f));
-	balls.push_back(Circle(0.3f, 0.3f, 0.045f));
-	balls.push_back(Circle(-0.3f, -1.0f, 0.085f));
+	world.balls.push_back(Circle(0.0f, 1.0f, 0.055f));
+	world.balls.push_back(Circle(0.3f,1.0f, 0.045f));
+	world.balls.push_back(Circle(-0.3f, 1.0f, 0.085f));
 
-	balls[0].vx = 0.8f;
-	balls[1].vx = -0.8f;
-	balls[2].vx = 0.0f;
+	world.balls[0].vx = 0.0f;
+	world.balls[1].vx = -0.0f;
+	world.balls[2].vx = 0.0f;
 
 
 
@@ -168,103 +169,31 @@ int main() {
 		lastFrame = currentFrame;
 
 
-		bool onground = (balls[0].y - balls[0].radius <= -1.0f + 0.001f);
+		bool onground = (world.balls[0].y - world.balls[0].radius <= -1.0f + 0.001f);
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate();
-		for (Circle& ball : balls) {
-			ball.ApplyGravity(gravity, dt);
-			if (onground == true) {
-				float friction = floorfriction * fabs(gravity);
 
-				if (ball.vx > 0) {
-					ball.vx -= friction * dt;
-					if (ball.vx == 0) {
-						ball.vx = 0;
-					}
-				}
-				if (ball.vy > 0) {
-					ball.vy -= friction * dt;
-					if (ball.vy == 0) {
-						ball.vy = 0;
-					}
-				}
-			}
+		world.update(dt);
 
-			ball.update(dt);
-			ball.checkWallCollision(-1.0f, 1.0f, 1.0f, -1.0f);
-
-		}
-
-		for (int i = 0;i < balls.size() ; i++) {
-			for (int j = i + 1;j < balls.size(); j++) {
-
-				Circle& A = balls[i];
-				Circle& B = balls[j];
-
-				float dx = B.x - A.x;
-				float dy = B.y - A.y;
-
-
-				float distance = sqrt(dx * dx + dy * dy);
-
-
-				if (distance < A.radius + B.radius&&distance>0.00001f) {
-					float overlap = (A.radius + B.radius) - distance;
-					float nx = dx / distance;
-					float ny = dy / distance;
-					float totalMass = A.mass + B.mass;
-	
-					float rvx = A.vx - B.vx;
-					float rvy = A.vy - B.vy;
-
-					float velAlongNormal = rvx * nx + rvy * ny;
-
-
-					A.x -= nx * overlap * (B.mass/totalMass);
-					A.y -= ny * overlap * (B.mass / totalMass);
-
-					B.x += nx * overlap * (B.mass / totalMass);
-					B.y += ny * overlap * (B.mass / totalMass);
-
-					if (velAlongNormal < 0) {
-						float e = 0.8f;
-
-						float j = -(1.0f + e) * velAlongNormal;
-
-						j /= (1 / A.mass) + (1 / B.mass);
-
-						float impluseX = j * nx;
-						float impluseY = j * ny;
-
-						A.vx -= impluseX / A.mass;
-						A.vy -= impluseY / A.mass;
-
-						B.vx -= impluseX / B.mass;
-						B.vy -= impluseY / B.mass;
-					}
-					
-				}
-			}
-		}
 		
 
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			balls[0].vx -= 0.001f;
+			world.balls[0].vx -= 0.1f;
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			balls[0].vx += 0.001f;
+			world.balls[0].vx += 0.1f;
 		}
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS  &&onground) {
-			balls[0].vy = 0.05f;
+			world.balls[0].vy = 0.2f;
 		}
 
 
 		gojo.Bind();
 		VAO1.Bind();
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		for (Circle& ball : balls) {
+		for (Circle& ball : world.balls) {
 			glUniform1f(scaleLoc, ball.radius);
 			glUniform2f(offsetLoc, ball.x, ball.y);
 			glDrawArrays(GL_TRIANGLE_FAN, 0, segments + 2);
