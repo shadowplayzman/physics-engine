@@ -12,7 +12,7 @@ public:
 	GLenum type;
 	Texture(const char* image, GLenum textype, GLenum slot, GLenum format, GLenum pixeltype);
 
-	void texunit(Shader shader, const char* uniform, GLuint unit);
+	void texunit(Shader& shader, const char* uniform, GLuint unit);
 	void Bind();
 	void Unbind();
 	void Delete();

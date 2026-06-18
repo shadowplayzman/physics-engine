@@ -151,6 +151,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
@@ -164,6 +165,7 @@
     <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
