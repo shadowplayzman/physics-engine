@@ -70,7 +70,7 @@ int main() {
 	//set context
 	glfwMakeContextCurrent(window);
 
-	glfwSwapInterval(1);
+	glfwSwapInterval(5);
 
 	//Init GLew
 	glewExperimental = GL_TRUE;
@@ -118,10 +118,13 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+		camera.Inputs(window);
 
 		//use the shader program ,bind the array,and the draw the triangle
 		shaderProgram.Activate(); 
+
+
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 		gojo.Bind();
 		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
