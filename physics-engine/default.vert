@@ -9,9 +9,13 @@ out vec2 texCoord;
 
 uniform mat4 camMatrix;
 uniform float scale;
+uniform vec2 offset;
 void main()
 {
- gl_Position = camMatrix * vec4(position, 1.0);
+gl_Position = vec4(position.x*scale+offset.x, 
+				   position.y*scale+offset.y, 
+				   position.z, 
+				   1.0);
 color=acolor;
 texCoord=aTex;
 }
