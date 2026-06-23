@@ -1,6 +1,6 @@
 #include"Texture.h"
 
-Texture::Texture(const char* image, GLenum textype, GLuint slot, GLenum format, GLenum pixeltype) {
+Texture::Texture(const char* image, const char* textype, GLuint slot, GLenum format, GLenum pixeltype) {
 	type = textype;
 	//textures
 	int widthImg, heightImg, numColch;
@@ -13,22 +13,22 @@ Texture::Texture(const char* image, GLenum textype, GLuint slot, GLenum format, 
 	glGenTextures(1, &ID);
 	glActiveTexture(GL_TEXTURE0+slot);
 	unit = slot;
-	glBindTexture(textype, ID);
+	glBindTexture(GL_TEXTURE_2D, ID);
 
 	//gl nearest preseves the pixels and linear generate pixels based on the existing pixels
-	glTexParameteri(textype, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(textype, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	glTexParameteri(textype, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(textype, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	glTexImage2D(textype, 0, GL_RGBA, widthImg, heightImg, 0, format, pixeltype, bytes);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, format, pixeltype, bytes);
 
-	glGenerateMipmap(textype);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
 
 	stbi_image_free(bytes);
-	glBindTexture(textype, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::texunit(Shader& shader, const char* uniform, GLuint unit) {
@@ -41,11 +41,11 @@ void Texture::texunit(Shader& shader, const char* uniform, GLuint unit) {
 
 void Texture::Bind() {
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(type, ID);
+	glBindTexture(GL_TEXTURE_2D, ID);
 }
 
 void Texture::Unbind() {
-	glBindTexture(type, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Texture::Delete() {

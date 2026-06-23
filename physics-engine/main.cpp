@@ -1,19 +1,4 @@
-#include <iostream>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <stb_image.h>
-#include<glm/glm.hpp>
-#include<glm/gtc/matrix_transform.hpp>
-#include<glm/gtc/type_ptr.hpp>
-
-#include"Texture.h" 
-#include"EBO.h"
-#include"ShaderClass.h"
-#include"VAO.h"
-#include"Camera.h"
-#include"VBO.h"
-
+#include"mesh.h"
 
 // size of the window
 const GLint width = 800, height = 800;
@@ -35,12 +20,12 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	//defining the vertices of the triangle
-	GLfloat vertices[] = {
-		//     COORDINATES     /        COLORS          /    TexCoord   /        NORMALS       //
-	-1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	-1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 1.0f,		0.0f, 1.0f, 0.0f,
-	 1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f, 0.0f,
-	 1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 0.0f,		0.0f, 1.0f, 0.0f
+	Vertex vertices[] = {
+	//               COORDINATES           /            COLORS          /           NORMALS         /       TEXTURE COORDINATES    //
+		Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+		Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
 	};
 
 	GLuint indices[] = {
@@ -48,15 +33,15 @@ int main() {
 			0, 2, 3, // Bottom side
 	};
 
-	GLfloat lightVertices[] = {
-			-0.1f, -0.1f,  0.1f,
-			-0.1f, -0.1f, -0.1f,
-			 0.1f, -0.1f, -0.1f,
-			 0.1f, -0.1f,  0.1f,
-			-0.1f,  0.1f,  0.1f,
-			-0.1f,  0.1f, -0.1f,
-			 0.1f,  0.1f, -0.1f,
-			 0.1f,  0.1f,  0.1f
+	Vertex lightVertices[] = {
+			Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
+			Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
+			Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
+			Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
+			Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
+			Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
+			Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
+			Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
 	};
 
 	GLuint lightIndices[] = {
@@ -105,33 +90,25 @@ int main() {
 
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
+
+	Texture textures[]{
+		Texture("gojo.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("gojospec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+
+	};
+
 	//running the shaderprogram function
 	Shader shaderProgram("default.vert", "default.frag");
-	//bindin vao1
-	VAO VAO1;
-	VAO1.Bind();
-
-	//refrencing vertices to VBO EBO
-	VBO VBO1(vertices, sizeof(vertices));
-	EBO EBO1(indices, sizeof(indices));
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 11 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
-	VAO1.Unbind();
-	VBO1.Unbind();
+	
+	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+	std::vector <GLuint> ind(indices, indices+ sizeof(indices) / sizeof(GLuint));
+	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+	Mesh floor(verts, ind, tex);
 
 	Shader lightShader("light.vert", "light.frag");
-	//bindin vao1
-	VAO lightVAO;
-	lightVAO.Bind();
-
-	//refrencing vertices to VBO EBO
-	VBO lightVBO(lightVertices, sizeof(lightVertices));
-	EBO lightEBO(lightIndices, sizeof(lightIndices));
-	lightVAO.LinkAttrib(lightVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
-	lightVAO.Unbind();
-	lightVBO.Unbind();
+	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
+	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
+	Mesh light(lightVerts, lightInd, tex);
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -150,12 +127,6 @@ int main() {
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-
-	//textures
-	Texture gojo("gojo.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-	gojo.texunit(shaderProgram, "tex0", 0);
-	Texture gojospec("gojospec.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
-	gojospec.texunit(shaderProgram, "tex1", 1);
 	
 
 	glEnable(GL_DEPTH_TEST);
@@ -177,17 +148,8 @@ int main() {
 		shaderProgram.Activate(); 
 
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
-		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		camera.Matrix( shaderProgram, "camMatrix");
-		gojo.Bind();
-		gojospec.Bind();
-		VAO1.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
-
-		lightShader.Activate();
-		camera.Matrix(lightShader, "camMatrix");
-		lightVAO.Bind();
-		glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		floor.Draw(shaderProgram, camera);
+		light.Draw(lightShader, camera);
 
 		glfwSwapBuffers(window);
 
@@ -198,10 +160,7 @@ int main() {
 
 
 	//cleanup
-	VAO1.Delete();
-	VBO1.Delete();
-	EBO1.Delete();
-	gojo.Delete();
+
 	shaderProgram.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();
