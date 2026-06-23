@@ -19,7 +19,7 @@ uniform mat4 scale;
 void main()
 {
 	crntPos = vec3(model * translation*rotation*scale* vec4(position, 1.0f));
-	Normal=aNormal;
+	Normal= mat3(transpose(inverse(model))) *aNormal;
 	color=acolor;
 	texCoord= aTex;
     gl_Position = camMatrix * vec4(crntPos, 1.0);

@@ -5,21 +5,7 @@ Texture::Texture(const char* image, const char* textype, GLuint slot) {
 	//textures
 	int widthImg, heightImg, numColch;
 	//flips the image
-	stbi_set_flip_vertically_on_load(true);
 	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColch, 0);
-
-	if (bytes == nullptr)
-	{
-		std::cout << "FAILED TO LOAD TEXTURE: " << image << std::endl;
-	}
-	else
-	{
-		std::cout << "SUCCESS: " << image
-			<< " Width=" << widthImg
-			<< " Height=" << heightImg
-			<< " Channels=" << numColch
-			<< std::endl;
-	}
 
 	//generate and binding the texture to the variable
 	GLuint texture;
@@ -49,7 +35,7 @@ Texture::Texture(const char* image, const char* textype, GLuint slot) {
 	else if (numColch == 3) {
 		glTexImage2D(GL_TEXTURE_2D,
 			0,
-			GL_RGBA,
+			GL_RGB,
 			widthImg,
 			heightImg,
 			0,
