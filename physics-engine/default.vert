@@ -12,13 +12,15 @@ out vec2 texCoord;
 
 
 uniform mat4 camMatrix;
-uniform float scale;
 uniform mat4 model;
+uniform mat4 translation;
+uniform mat4 rotation;
+uniform mat4 scale;
 void main()
 {
-	crntPos = vec3(model * vec4(position, 1.0f));
+	crntPos = vec3(model * translation*rotation*scale* vec4(position, 1.0f));
 	Normal=aNormal;
 	color=acolor;
-	texCoord=aTex;
+	texCoord= aTex;
     gl_Position = camMatrix * vec4(crntPos, 1.0);
 }

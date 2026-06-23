@@ -11,7 +11,7 @@ public:
 	GLuint ID;
 	const char* type;
 	GLuint unit;
-	Texture(const char* image, const char* textype, GLuint slot, GLenum format, GLenum pixeltype);
+	Texture(const char* image, const char* textype, GLuint slot);
 
 	void texunit(Shader& shader, const char* uniform, GLuint unit);
 	void Bind();

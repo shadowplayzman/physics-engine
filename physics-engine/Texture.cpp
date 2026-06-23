@@ -1,12 +1,25 @@
 #include"Texture.h"
 
-Texture::Texture(const char* image, const char* textype, GLuint slot, GLenum format, GLenum pixeltype) {
+Texture::Texture(const char* image, const char* textype, GLuint slot) {
 	type = textype;
 	//textures
 	int widthImg, heightImg, numColch;
 	//flips the image
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColch, 4);
+	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColch, 0);
+
+	if (bytes == nullptr)
+	{
+		std::cout << "FAILED TO LOAD TEXTURE: " << image << std::endl;
+	}
+	else
+	{
+		std::cout << "SUCCESS: " << image
+			<< " Width=" << widthImg
+			<< " Height=" << heightImg
+			<< " Channels=" << numColch
+			<< std::endl;
+	}
 
 	//generate and binding the texture to the variable
 	GLuint texture;
@@ -22,7 +35,44 @@ Texture::Texture(const char* image, const char* textype, GLuint slot, GLenum for
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, format, pixeltype, bytes);
+	if (numColch == 4) {
+		glTexImage2D(GL_TEXTURE_2D,
+			0,
+			GL_RGBA,
+			widthImg,
+			heightImg,
+			0,
+			GL_RGBA,
+			GL_UNSIGNED_BYTE,
+			bytes);
+	}
+	else if (numColch == 3) {
+		glTexImage2D(GL_TEXTURE_2D,
+			0,
+			GL_RGBA,
+			widthImg,
+			heightImg,
+			0,
+			GL_RGB,
+			GL_UNSIGNED_BYTE,
+			bytes);
+	}
+	else if (numColch == 1) {
+		glTexImage2D(GL_TEXTURE_2D,
+			0,
+			GL_RGBA,
+			widthImg,
+			heightImg,
+			0,
+			GL_RED,
+			GL_UNSIGNED_BYTE,
+			bytes);
+	}
+	else
+	{
+		throw std::invalid_argument("Automatic Texture type recongitniton failed");
+	}
+	
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 

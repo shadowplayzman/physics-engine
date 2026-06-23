@@ -97,8 +97,8 @@ vec4 spotLight(){
 	float inten=clamp((angle-outercone)/(innercone-outercone),0.0f,1.0f);
 
 	// outputs final color
-	return (texture(diffuse0, texCoord) * lightColor * (diffuse*inten + ambient )+texture(specular0, texCoord).r*specular*inten)*lightColor;}
+	return (texture(diffuse0, texCoord) * (diffuse * inten + ambient) + texture(specular0, texCoord).r * specular * inten) * lightColor;}
 void main()
 {
-FragColor=pointLight();
-}
+   FragColor = direcLight();
+   }
