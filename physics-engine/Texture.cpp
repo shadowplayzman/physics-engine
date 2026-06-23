@@ -1,6 +1,6 @@
 #include"Texture.h"
 
-Texture::Texture(const char* image, GLenum textype, GLenum slot, GLenum format, GLenum pixeltype) {
+Texture::Texture(const char* image, GLenum textype, GLuint slot, GLenum format, GLenum pixeltype) {
 	type = textype;
 	//textures
 	int widthImg, heightImg, numColch;
@@ -11,7 +11,8 @@ Texture::Texture(const char* image, GLenum textype, GLenum slot, GLenum format, 
 	//generate and binding the texture to the variable
 	GLuint texture;
 	glGenTextures(1, &ID);
-	glActiveTexture(slot);
+	glActiveTexture(GL_TEXTURE0+slot);
+	unit = slot;
 	glBindTexture(textype, ID);
 
 	//gl nearest preseves the pixels and linear generate pixels based on the existing pixels
@@ -32,13 +33,14 @@ Texture::Texture(const char* image, GLenum textype, GLenum slot, GLenum format, 
 
 void Texture::texunit(Shader& shader, const char* uniform, GLuint unit) {
 
-	GLuint texUni = glGetUniformLocation(shader.ID, "tex0");
+	GLuint texUni = glGetUniformLocation(shader.ID, uniform);
 	shader.Activate();
-	glUniform1i(texUni, 0);
+	glUniform1i(texUni, unit);
 
 }
 
 void Texture::Bind() {
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(type, ID);
 }
 

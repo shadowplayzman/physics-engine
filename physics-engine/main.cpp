@@ -90,7 +90,7 @@ int main() {
 	//set context
 	glfwMakeContextCurrent(window);
 
-	glfwSwapInterval(5);
+	glfwSwapInterval(1);
 
 	//Init GLew
 	glewExperimental = GL_TRUE;
@@ -133,7 +133,7 @@ int main() {
 	lightVAO.Unbind();
 	lightVBO.Unbind();
 
-	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 lightColor = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::mat4 lightmodel = glm::mat4(1.0f);
 	lightmodel = glm::translate(lightmodel, lightPos);
@@ -152,8 +152,11 @@ int main() {
 
 
 	//textures
-	Texture gojo("gojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture gojo("gojo.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
 	gojo.texunit(shaderProgram, "tex0", 0);
+	Texture gojospec("gojospec.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+	gojospec.texunit(shaderProgram, "tex1", 1);
+	
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -177,6 +180,7 @@ int main() {
 		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 		camera.Matrix( shaderProgram, "camMatrix");
 		gojo.Bind();
+		gojospec.Bind();
 		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
 

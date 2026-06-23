@@ -10,7 +10,8 @@ class Texture {
 public:
 	GLuint ID;
 	GLenum type;
-	Texture(const char* image, GLenum textype, GLenum slot, GLenum format, GLenum pixeltype);
+	GLuint unit;
+	Texture(const char* image, GLenum textype, GLuint slot, GLenum format, GLenum pixeltype);
 
 	void texunit(Shader& shader, const char* uniform, GLuint unit);
 	void Bind();
