@@ -195,15 +195,6 @@ int main() {
 			world.balls[0].vy = 0.2f;
 		}
 
-		gojo.Bind();
-		VAO1.Bind();
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		for (Circle& ball : world.balls) {
-			glUniform1f(scaleLoc, ball.radius);
-			glUniform2f(offsetLoc, ball.x, ball.y);
-			glDrawArrays(GL_TRIANGLE_FAN, 0, segments + 2);
-		}
-		glfwSwapBuffers(window);
 		shaderProgram.Activate(); 
 
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
@@ -218,10 +209,7 @@ int main() {
 
 
 	//cleanup
-	VAO1.Delete();
-	VBO1.Delete();
-	//EBO1.Delete();
-	gojo.Delete();
+
 	shaderProgram.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();

@@ -16,7 +16,7 @@ uniform mat4 model;
 uniform mat4 translation;
 uniform mat4 rotation;
 uniform mat4 scale;
-uniform float scale;
+uniform float ballscale;
 uniform vec2 offset;
 void main()
 {

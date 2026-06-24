@@ -12,7 +12,7 @@ void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
 
 
 	view = glm::lookAt(Position , Position + Orientation, Up);
-	projection = glm::perspective(glm::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
+	projection = glm::perspective(glm::radians(FOVdeg), (float)width / (float)height, nearPlane, farPlane);
 	camMatrix = projection * view;
 }
 
