@@ -1,21 +1,28 @@
 #version 330 core
 layout (location = 0) in vec3 position;
-layout (location= 1) in vec3 acolor;
-layout (location=2) in vec2 aTex;
+layout (location=1) in vec3 aNormal;
+layout (location= 2) in vec3 acolor;
+layout (location=3) in vec2 aTex;
 
 //outputs the vector color,texcoord
+out vec3 crntPos;
+out vec3 Normal;
 out vec3 color;
 out vec2 texCoord;
 
+
 uniform mat4 camMatrix;
+uniform mat4 model;
+uniform mat4 translation;
+uniform mat4 rotation;
+uniform mat4 scale;
 uniform float scale;
 uniform vec2 offset;
 void main()
 {
-gl_Position = vec4(position.x*scale+offset.x, 
-				   position.y*scale+offset.y, 
-				   position.z, 
-				   1.0);
-color=acolor;
-texCoord=aTex;
+	crntPos = vec3(model * translation*rotation*scale* vec4(position, 1.0f));
+	Normal= mat3(transpose(inverse(model))) *aNormal;
+	color=acolor;
+	texCoord= aTex;
+    gl_Position = camMatrix * vec4(crntPos, 1.0);
 }

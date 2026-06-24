@@ -1,13 +1,5 @@
-#include <iostream>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <stb_image.h>
-#include<vector>
-#include<cmath>
-#include<glm/glm.hpp>
-#include<glm/gtc/matrix_transform.hpp>
-#include<glm/gtc/type_ptr.hpp>
+#include"mesh.h"
+#include"Model.h"
 
 #include"Texture.h" 
 #include"EBO.h"
@@ -138,33 +130,34 @@ int main() {
 
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
-	//running the shaderprogram function
-	Shader shaderProgram("default.vert", "default.frag");
-	//bindin vao1
-	VAO VAO1;
-	VAO1.Bind();
 
-	//refrencing vertices to VBO EBO
-	VBO VBO1(vertices.data(), vertices.size()*sizeof(GLfloat));
-	//EBO EBO1(indices, sizeof(indices));
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	VAO1.Unbind();
-	VBO1.Unbind();
+
+	//running the shaderprogram function
+	Shader shaderProgram("default.vert", "default.frag");;
+
+	Shader lightShader("light.vert", "light.frag");
+
+	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
+	glm::mat4 lightmodel = glm::mat4(1.0f);
+	lightmodel = glm::translate(lightmodel, lightPos);
+
+
 	
-	//gets id of unifprm called scale
-	GLuint scaleLoc = glGetUniformLocation(shaderProgram.ID, "scale");
-	GLuint offsetLoc = glGetUniformLocation(shaderProgram.ID, "offset");
-	//textures
-	Texture gojo("gojo.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	gojo.texunit(shaderProgram, "tex0", 0);
+	shaderProgram.Activate();
+	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+
+	
 
 	float lastFrame = glfwGetTime();
 
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 4.0f));
+
+	Model model("models/sword/scene.gltf");
+	
 
 	//main loop
 
@@ -175,7 +168,7 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+		camera.Inputs(window);
 
 		float currentFrame = glfwGetTime();
 		float dt = currentFrame - lastFrame;
@@ -211,8 +204,13 @@ int main() {
 			glDrawArrays(GL_TRIANGLE_FAN, 0, segments + 2);
 		}
 		glfwSwapBuffers(window);
+		shaderProgram.Activate(); 
 
-		
+		camera.updateMatrix(45.0f, 0.1f, 100.0f);
+
+		model.Draw(shaderProgram,camera);
+		glfwSwapBuffers(window);
+
 
 	}
 
