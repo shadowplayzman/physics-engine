@@ -19,6 +19,9 @@
     <Filter Include="Resource Files\Textures">
       <UniqueIdentifier>{9e3c561b-38dc-4c86-be5b-d423a827da26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2d engine">
+      <UniqueIdentifier>{aa0d1838-26ac-4ce2-9ae2-1000212a99bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,10 +54,16 @@
     <ClCompile Include="Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
+    <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsWorld.cpp">
+      <Filter>2d engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>2d engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,10 +106,16 @@
     <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Circle.h">
+    <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>2d engine</Filter>
+    </ClInclude>
     <ClInclude Include="PhysicsWorld.h">
+      <Filter>2d engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

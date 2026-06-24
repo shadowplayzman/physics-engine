@@ -2,10 +2,12 @@
 #include"Model.h"
 
 #include"Texture.h" 
+#include"Transform.h"
 #include"EBO.h"
 #include"Circle.h"
 #include"PhysicsWorld.h"
 #include"ShaderClass.h"
+#include"SphereMesh.h"
 #include"VAO.h"
 #include"Camera.h"
 #include"VBO.h"
@@ -156,8 +158,8 @@ int main() {
 
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 4.0f));
 
-	Model model("models/sword/scene.gltf");
-	
+	SphereMesh sphere(1.0f, 32, 32);
+
 
 	//main loop
 
@@ -174,6 +176,9 @@ int main() {
 		float dt = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
+		Transform test;
+		test.position = glm::vec3(2.0f, 3.0f, 4.0f);
+		glm::mat4 modelMatrix = test.GetMatrix();
 
 		bool onground = (world.balls[0].y - world.balls[0].radius <= -1.0f + 0.001f);
 
@@ -182,24 +187,13 @@ int main() {
 
 		world.update(dt);
 
-		
-
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			world.balls[0].vx -= 0.1f;
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			world.balls[0].vx += 0.1f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS  &&onground) {
-			world.balls[0].vy = 0.2f;
-		}
+		//sphere.mesh->Draw(shaderProgram, camera);
 
 		shaderProgram.Activate(); 
 
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		model.Draw(shaderProgram,camera);
+
 		glfwSwapBuffers(window);
 
 
