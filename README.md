@@ -1,47 +1,97 @@
-# 2D Physics Engine (Work in Progress)
+# Physics Engine
 
-A custom 2D physics engine built from scratch in C++ using OpenGL.
+A custom physics engine and rendering engine written in C++ using OpenGL.
 
 ## Current Features
 
-* Custom circle rendering using OpenGL
-* Multiple dynamic bodies
-* Gravity simulation
-* Velocity and acceleration integration
-* Wall collisions with restitution (bouncing)
-* Circle-to-circle collision detection
-* Impulse-based collision response
-* Mass-based interactions
-* Texture support
-* Keyboard-controlled objects
+### Rendering
 
-## What I Learned
+* OpenGL 3.3 Core Profile
+* Custom Shader System
+* VAO / VBO / EBO abstraction
+* Texture Loading with stb_image
+* Camera System with WASD + Mouse Controls
+* Phong Lighting
+* Point Lights
+* Directional Lights
+* Spotlight Support
+* 3D Model Loading using Assimp
+* Mesh Rendering Pipeline
 
-This project was created to better understand the fundamentals behind physics engines rather than relying on existing libraries. During development I implemented core concepts such as:
+### Physics
 
-* Vector mathematics
-* Collision detection
-* Collision resolution
-* Impulse calculations
-* Gravity and motion integration
-* Object-oriented engine architecture
-* OpenGL rendering pipeline
+* PhysicsWorld Simulation
+* Gravity
+* Force Integration
+* Velocity and Acceleration Updates
+* Multiple Body Support
+* Circle Collision Detection
+* Collision Resolution
 
-## Planned Features
+### Engine Architecture
 
-* Material system (friction, density, restitution)
-* Improved collision stability
-* Force accumulator system
-* Physics world management
-* Rectangle and polygon support
-* Circle-rectangle collisions
-* Springs and constraints
-* Broad-phase collision detection
+* Custom Mesh Class
+* Custom Model Class
+* Custom Texture Class
+* Custom Shader Class
+* Custom Camera Class
+* PhysicsWorld Management
 
-## Long-Term Goal
+## Technologies Used
 
-This project serves as a stepping stone toward developing a custom 3D physics and simulation framework. The ultimate goal is to create large-scale astrophysics simulations, including orbital mechanics, gravity systems, and eventually a real-time 3D black hole simulation.
+* C++
+* OpenGL
+* GLFW
+* GLEW
+* GLM
+* stb_image
+* Assimp
 
-## Status
+## Project Roadmap
 
-Active development. Built from scratch for learning and experimentation.
+### Completed
+
+* [x] OpenGL Setup
+* [x] 2D Rendering
+* [x] Texturing
+* [x] Shader System
+* [x] PhysicsWorld
+* [x] Gravity Simulation
+* [x] 3D Camera
+* [x] Lighting System
+* [x] Model Loading
+* [x] Assimp Integration
+
+### In Progress
+
+* [ ] Solar System Simulation
+* [ ] Sphere Rendering System
+* [ ] Planet Class Architecture
+* [ ] Orbital Mechanics
+
+### Planned
+
+* [ ] Newtonian Gravity Simulation
+* [ ] N-Body Simulation
+* [ ] Rigid Body System
+* [ ] Broad Phase Collision Detection
+* [ ] Narrow Phase Collision Detection
+* [ ] Constraint Solver
+* [ ] 3D Physics Engine
+* [ ] Spatial Partitioning
+* [ ] General Relativity Experiments
+
+## Example
+
+Current model loading and lighting:
+
+* Textured 3D model rendering
+* Dynamic camera controls
+* Multiple lighting models
+* Real-time rendering pipeline
+
+## Author
+
+Manroop Singh
+
+Built as a long-term project to learn graphics programming, physics simulation, and engine architecture from scratch.
