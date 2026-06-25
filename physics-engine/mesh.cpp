@@ -1,9 +1,9 @@
 #include"mesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures) {
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Material material) {
 	Mesh::vertices = vertices;
 	Mesh::indices = indices;
-	Mesh::textures = textures;
+	Mesh::material = material;
 
 	VAO.Bind();
 
@@ -29,24 +29,42 @@ void Mesh::Draw(Shader& shader,
 	shader.Activate();
 	VAO.Bind();
 
+	//diffuse texture
+	if (material.diffuseTexture != nullptr) {
+		glUniform1i(glGetUniformLocation(shader.ID, "hasDiffuseTexture"), 1);
 
-	unsigned int numDiffuse = 0;
-	unsigned int numspecular = 0;
-
-	for (unsigned int i = 0;i < textures.size();i++) {
-		std::string num;
-		std::string type = textures[i].type;
-
-		if (type == "diffuse") {
-			num = std::to_string(numDiffuse++);
-		}
-		else if (type == "specular") {
-			num = std::to_string(numspecular++);
-		}
-		textures[i].texunit(shader, (type + num).c_str(), i);
-		textures[i].Bind();
+		material.diffuseTexture->texunit(shader, "diffuse0", 0);
+		material.diffuseTexture->Bind();
+	}
+	else {
+		glUniform1i(glGetUniformLocation(shader.ID, "hasDiffuseTexture"),0);
 
 	}
+
+	//specular texture
+
+	if (material.specularTexture != nullptr) {
+		glUniform1i(glGetUniformLocation(shader.ID, "hasSpecularTexture"), 1);
+
+		material.specularTexture->texunit(shader, "specular0", 0);
+		material.specularTexture->Bind();
+	}
+	else
+	{
+		glUniform1i(glGetUniformLocation(shader.ID, "hasSpecularTexture"), 0);
+	}
+
+	glUniform3f(glGetUniformLocation(shader.ID, "materialDiffuseColor"),
+		material.diffusecolor.x,
+		material.diffusecolor.y,
+		material.diffusecolor.z);
+
+	glUniform3f(glGetUniformLocation(shader.ID, "materialSpecularColor"),
+		material.specularColor.x,
+		material.specularColor.y,
+		material.specularColor.z);
+
+	glUniform1f(glGetUniformLocation(shader.ID, "materialSpecularColor"), material.shininess);
 
 	glUniform3f(glGetUniformLocation(shader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 	camera.Matrix(shader, "camMatrix");

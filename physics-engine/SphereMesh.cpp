@@ -3,7 +3,6 @@
 SphereMesh::SphereMesh(float radius,int sectors,int stacks) {
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
-	std::vector<Texture> textures;
 	const float PI = 3.14159265359f;
 
 	for (int i = 0;i <= stacks;i++) {
@@ -49,12 +48,10 @@ SphereMesh::SphereMesh(float radius,int sectors,int stacks) {
 			K2++;
 		}
 	}
-	std::cout
-		<< "Index Count: "
-		<< indices.size()
-		<< std::endl;
+	Material material;
+	mesh = new Mesh(vertices, indices, material);
 
 }
 SphereMesh::~SphereMesh() {
-
+	delete mesh;
 }

@@ -2,7 +2,7 @@
 #define MESH_CLASS_H
 
 #include<string>
-
+#include"Material.h"
 #include"VAO.h"
 #include"EBO.h"
 #include"Camera.h"
@@ -13,11 +13,12 @@ class Mesh {
 public:
 	std::vector <Vertex> vertices;
 	std::vector <GLuint> indices;
-	std::vector <Texture> textures;
+
+	Material material;
 
 	VAO VAO;
 
-	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
+	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Material material);
 
 	void Draw(Shader& shader, 
 		Camera& camera,

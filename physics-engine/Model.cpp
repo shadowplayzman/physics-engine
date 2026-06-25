@@ -44,8 +44,16 @@ void Model::loadMesh(unsigned int indMesh)
 	std::vector<GLuint> indices = getIndices(JSON["accessors"][indAccInd]);
 	std::vector<Texture> textures = getTextures();
 
+	Material material;
+	if (!textures.empty()) {
+		material.diffuseTexture = &textures[0];
+	}
+	if (textures.size() > 1) {
+		material.specularTexture = &textures[1];
+	}
+
 	// Combine the vertices, indices, and textures into a mesh
-	meshes.push_back(Mesh(vertices, indices, textures));
+	meshes.push_back(Mesh(vertices, indices, material));
 	std::cout << "Loading mesh\n";
 }
 

@@ -160,7 +160,6 @@ int main() {
 
 	SphereMesh sphere(1.0f, 32, 32);
 
-
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
@@ -187,7 +186,7 @@ int main() {
 
 		world.update(dt);
 
-		//sphere.mesh->Draw(shaderProgram, camera);
+		sphere.mesh->Draw(shaderProgram, camera);
 
 		shaderProgram.Activate(); 
 
