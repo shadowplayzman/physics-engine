@@ -194,6 +194,7 @@
     <ClInclude Include="PhysicsWorld.h" />
     <ClInclude Include="PrimitiveMeshFactory.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />

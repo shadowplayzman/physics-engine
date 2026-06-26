@@ -133,6 +133,9 @@
     <ClInclude Include="Model.h">
       <Filter>archive</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="gojo.png">
