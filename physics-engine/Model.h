@@ -23,6 +23,7 @@ private:
 
 	// All the meshes and transformations
 	std::vector<Mesh> meshes;
+	std::vector<Material> materials;
 	std::vector<glm::vec3> translationsMeshes;
 	std::vector<glm::quat> rotationsMeshes;
 	std::vector<glm::vec3> scalesMeshes;
@@ -31,6 +32,7 @@ private:
 	// Prevents textures from being loaded twice
 	std::vector<std::string> loadedTexName;
 	std::vector<Texture> loadedTex;
+	std::vector<Texture> modelTextures;
 
 	// Loads a single mesh by its index
 	void loadMesh(unsigned int indMesh);

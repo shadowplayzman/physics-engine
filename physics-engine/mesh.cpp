@@ -1,9 +1,9 @@
 #include"mesh.h"
+#include"Material.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Material material) {
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices) {
 	Mesh::vertices = vertices;
 	Mesh::indices = indices;
-	Mesh::material = material;
 
 	VAO.Bind();
 
@@ -23,11 +23,13 @@ void Mesh::Draw(Shader& shader,
 	glm::mat4 matrix,
 	glm::vec3 translation,
 	glm::quat rotation,
-	glm::vec3 scale
+	glm::vec3 scale,
+	Material& material
 	)
 {
 	shader.Activate();
 	VAO.Bind();
+
 
 	//diffuse texture
 	if (material.diffuseTexture != nullptr) {
@@ -64,7 +66,7 @@ void Mesh::Draw(Shader& shader,
 		material.specularColor.y,
 		material.specularColor.z);
 
-	glUniform1f(glGetUniformLocation(shader.ID, "materialSpecularColor"), material.shininess);
+	glUniform1f(glGetUniformLocation(shader.ID, "materialShininess"), material.shininess);
 
 	glUniform3f(glGetUniformLocation(shader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 	camera.Matrix(shader, "camMatrix");
@@ -83,4 +85,6 @@ void Mesh::Draw(Shader& shader,
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(matrix));
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+
 }

@@ -13,14 +13,10 @@ out vec2 texCoord;
 
 uniform mat4 camMatrix;
 uniform mat4 model;
-uniform mat4 translation;
-uniform mat4 rotation;
-uniform mat4 scale;
-uniform float ballscale;
-uniform vec2 offset;
+
 void main()
 {
-	crntPos = vec3(model * translation*rotation*scale* vec4(position, 1.0f));
+	crntPos = vec3(model *  vec4(position, 1.0f));
 	Normal= mat3(transpose(inverse(model))) *aNormal;
 	color=acolor;
 	texCoord= aTex;

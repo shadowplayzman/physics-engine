@@ -22,6 +22,9 @@
     <Filter Include="2d engine">
       <UniqueIdentifier>{aa0d1838-26ac-4ce2-9ae2-1000212a99bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="archive">
+      <UniqueIdentifier>{26d62235-a8ec-4a7f-99a8-811d15688ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,9 +54,6 @@
     <ClCompile Include="mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,11 +63,17 @@
     <ClCompile Include="Circle.cpp">
       <Filter>2d engine</Filter>
     </ClCompile>
-    <ClCompile Include="SphereMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimitiveMeshFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>archive</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +112,6 @@
     <ClInclude Include="mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -118,11 +121,17 @@
     <ClInclude Include="PhysicsWorld.h">
       <Filter>2d engine</Filter>
     </ClInclude>
-    <ClInclude Include="SphereMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveMeshFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>archive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -157,10 +157,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Model.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="PhysicsWorld.cpp" />
+    <ClCompile Include="PrimitiveMeshFactory.cpp" />
+    <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
-    <ClCompile Include="SphereMesh.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -178,11 +184,17 @@
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="mesh.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Model.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="PhysicsWorld.h" />
+    <ClInclude Include="PrimitiveMeshFactory.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="SphereMesh.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VAO.h" />

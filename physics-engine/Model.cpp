@@ -1,4 +1,6 @@
 #include"Model.h"
+#include"Renderable.h"
+#include"mesh.h"
 
 Model::Model(const char* file)
 {
@@ -19,7 +21,13 @@ void Model::Draw(Shader& shader, Camera& camera)
 	// Go over all meshes and draw each one
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Mesh::Draw(shader, camera, matricesMeshes[i]);
+		meshes[i].Mesh::Draw(shader,
+			camera,
+			matricesMeshes[i],
+			glm::vec3(0.0f),
+			glm::quat(1.0f,0.0f,0.0f,0.0f),
+			glm::vec3(1.0f),
+			materials[i]);
 	}
 }
 
@@ -42,19 +50,30 @@ void Model::loadMesh(unsigned int indMesh)
 	// Combine all the vertex components and also get the indices and textures
 	std::vector<Vertex> vertices = assembleVertices(positions, normals, texUVs);
 	std::vector<GLuint> indices = getIndices(JSON["accessors"][indAccInd]);
-	std::vector<Texture> textures = getTextures();
+	modelTextures = getTextures();
 
-	Material material;
-	if (!textures.empty()) {
-		material.diffuseTexture = &textures[0];
+	materials.emplace_back();;
+	Material& material = materials.back();
+	if (!modelTextures.empty()) {
+		material.diffuseTexture = &modelTextures[0];
 	}
-	if (textures.size() > 1) {
-		material.specularTexture = &textures[1];
+	if (modelTextures.size() > 1) {
+		material.specularTexture = &modelTextures[1];
 	}
 
 	// Combine the vertices, indices, and textures into a mesh
-	meshes.push_back(Mesh(vertices, indices, material));
-	std::cout << "Loading mesh\n";
+	Mesh mesh(vertices, indices);
+
+	Renderable renderable;
+
+	renderable.mesh = new Mesh(mesh);
+	renderable.material = material;
+
+
+
+
+	renderables.push_back(renderable);
+
 }
 
 void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix)

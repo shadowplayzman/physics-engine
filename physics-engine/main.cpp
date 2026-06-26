@@ -1,5 +1,4 @@
 #include"mesh.h"
-#include"Model.h"
 
 #include"Texture.h" 
 #include"Transform.h"
@@ -7,7 +6,8 @@
 #include"Circle.h"
 #include"PhysicsWorld.h"
 #include"ShaderClass.h"
-#include"SphereMesh.h"
+#include"PrimitiveMeshFactory.h"
+#include"Renderable.h"
 #include"VAO.h"
 #include"Camera.h"
 #include"VBO.h"
@@ -15,11 +15,6 @@
 
 // size of the window
 const GLint width = 800, height = 800;
-
-// velocity  and accleration
-const float gravity = -9.8f;
-
-PhysicsWorld world(gravity);
 
 int main() {
 
@@ -36,70 +31,6 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	//defining the vertices of the triangle
-	/*GLfloat vertices[] = {
-		//       cordinates								/  colors		
-		-0.5f  ,-0.5f  ,0.0f,    1.0f,0.0f , 0.0f,    0.0f,0.0f,//lower left conrer
-		-0.5f  , 0.5f  ,0.0f,    0.0f,1.0f , 0.0f,    0.0f,1.0f,//upper left corner
-		 0.5f  , 0.5f  ,0.0f,    0.0f,0.0f , 1.0f,    1.0f,1.0f,//upper right
-		 0.5f  ,-0.5f  ,0.0f,    1.0f,1.0f , 1.0f,    1.0f,0.0f,//lower left corner
-
-	};
-
-	GLuint indices[] = {
-				0,2,1,
-				0,3,2
-	};*/
-
-	const int segments = 100;
-	std::vector<GLfloat> vertices;
-
-	//center vertex
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-	vertices.push_back(0.0f);
-
-	//color
-	vertices.push_back(1.0f);
-	vertices.push_back(1.0f);
-	vertices.push_back(1.0f);
-	 
-	//texture
-	vertices.push_back(0.5f);
-	vertices.push_back(0.5f);
-
-	for (int i = 0;i <= segments;i++) {
-		float angle = 2.0f * 3.14159 * i / segments;
-
-		float x =cos(angle);
-		float y = sin(angle);
-
-		vertices.push_back(x);
-		vertices.push_back(y);
-		vertices.push_back(0.0f);
-
-		vertices.push_back(1.0f);
-		vertices.push_back(1.0f);
-		vertices.push_back(1.0f);
-
-		vertices.push_back((x + 1.0f) * 0.5f);
-		vertices.push_back((y + 1.0f) * 0.5f);
-
-
-	}
-
-
-	world.balls.push_back(Circle(0.0f, 1.0f, 0.055f));
-	world.balls.push_back(Circle(0.3f,1.0f, 0.045f));
-	world.balls.push_back(Circle(-0.3f, 1.0f, 0.085f));
-
-	world.balls[0].vx = 0.0f;
-	world.balls[1].vx = -0.0f;
-	world.balls[2].vx = 0.0f;
-
-
-
-
 	// create window
 	GLFWwindow* window = glfwCreateWindow(width, height, "Physics Engine", NULL, NULL);
 
@@ -115,7 +46,6 @@ int main() {
 
 	//set context
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(5);
 
 	glfwSwapInterval(1);
 
@@ -139,6 +69,7 @@ int main() {
 
 	Shader lightShader("light.vert", "light.frag");
 
+
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::mat4 lightmodel = glm::mat4(1.0f);
@@ -150,47 +81,34 @@ int main() {
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-	
-
-	float lastFrame = glfwGetTime();
 
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 4.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f,6.0f));
 
-	SphereMesh sphere(1.0f, 32, 32);
+	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
+
+	Renderable sphere;
+	sphere.mesh = &sphereMesh;
 
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
 		//get and handle user inputs
+	
 		glfwPollEvents();
 		//clear buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		camera.Inputs(window);
-
-		float currentFrame = glfwGetTime();
-		float dt = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-
-		Transform test;
-		test.position = glm::vec3(2.0f, 3.0f, 4.0f);
-		glm::mat4 modelMatrix = test.GetMatrix();
-
-		bool onground = (world.balls[0].y - world.balls[0].radius <= -1.0f + 0.001f);
 
 		//use the shader program ,bind the array,and the draw the triangle
-		shaderProgram.Activate();
 
-		world.update(dt);
 
-		sphere.mesh->Draw(shaderProgram, camera);
-
-		shaderProgram.Activate(); 
-
+		camera.Inputs(window);
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
+		shaderProgram.Activate(); 
+		sphere.Draw(shaderProgram, camera);
 
 
 		glfwSwapBuffers(window);
