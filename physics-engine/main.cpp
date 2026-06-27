@@ -3,10 +3,10 @@
 #include"Texture.h" 
 #include"Transform.h"
 #include"EBO.h"
-#include"Circle.h"
 #include"PhysicsWorld.h"
 #include"ShaderClass.h"
 #include"PrimitiveMeshFactory.h"
+#include"RigidBody.h"
 #include"Renderable.h"
 #include"VAO.h"
 #include"Camera.h"
@@ -15,6 +15,8 @@
 
 // size of the window
 const GLint width = 800, height = 800;
+PhysicsWorld world(glm::vec3(0.0f, -9.81f, 0.0f));
+
 
 int main() {
 
@@ -84,24 +86,31 @@ int main() {
 
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f,6.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f,12.0f));
 
 	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
+	Rigidbody body(1.0f);
 
 	Renderable sphere;
 	sphere.mesh = &sphereMesh;
 
+	body.transform = &sphere.transform;
+	world.AddBody(&body);
+
+	float lastFrame = 0;
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
 		//get and handle user inputs
-	
 		glfwPollEvents();
+		float currentFrame = glfwGetTime();
+		float dt = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 		//clear buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-
+		world.Update(dt);
 		//use the shader program ,bind the array,and the draw the triangle
 
 

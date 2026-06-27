@@ -1,12 +1,15 @@
 #ifndef RIGID_BODY_H
 #define RIGID_BODY_H
 
-class Transform;
 #include<glm/glm.hpp>
+struct Transform;
+class Collider;
 
-class RigidBody {
+class Rigidbody {
 	public:
-		Transform* transform;
+		Transform* transform=nullptr;
+		Collider* collider = nullptr;
+		
 
 		float mass;
 		float inverseMass;
@@ -16,7 +19,7 @@ class RigidBody {
 
 		bool useGravity = true;
 
-		RigidBody(float mass = 1.0f);
+		Rigidbody(float mass = 1.0f);
 
 		void AddForce(const glm::vec3& force);
 

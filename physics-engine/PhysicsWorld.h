@@ -2,14 +2,17 @@
 #define PHYSICS_CLASS_H
  
 #include<vector>
-#include"Circle.h"
+#include<glm/glm.hpp>
+
+class Rigidbody;
 
 class PhysicsWorld {
 public:
-	std::vector<Circle> balls;
-	float gravity;
-	PhysicsWorld(float gravityValue);
-	void update(float dt);
+	std::vector<Rigidbody*> bodies;
+	glm::vec3 gravity;
+	PhysicsWorld(const glm::vec3& gravity);
+	void AddBody(Rigidbody* body);
+	void Update(float dt);
 };
 
 #endif // !PHYSICS_CLASS_H

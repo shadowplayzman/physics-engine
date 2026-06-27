@@ -166,6 +166,7 @@
     <ClCompile Include="PhysicsWorld.cpp" />
     <ClCompile Include="PrimitiveMeshFactory.cpp" />
     <ClCompile Include="Renderable.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />

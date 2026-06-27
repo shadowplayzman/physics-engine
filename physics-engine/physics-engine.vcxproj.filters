@@ -57,9 +57,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsWorld.cpp">
-      <Filter>2d engine</Filter>
-    </ClCompile>
     <ClCompile Include="Circle.cpp">
       <Filter>2d engine</Filter>
     </ClCompile>
@@ -74,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>archive</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsWorld.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,9 +121,6 @@
     <ClInclude Include="Circle.h">
       <Filter>2d engine</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsWorld.h">
-      <Filter>2d engine</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -134,6 +134,9 @@
       <Filter>archive</Filter>
     </ClInclude>
     <ClInclude Include="RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
