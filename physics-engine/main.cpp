@@ -15,7 +15,7 @@
 
 // size of the window
 const GLint width = 800, height = 800;
-PhysicsWorld world(glm::vec3(0.0f, -9.81f, 0.0f));
+PhysicsWorld world(glm::vec3(0.0f, -1.81f, 0.0f));
 
 
 int main() {

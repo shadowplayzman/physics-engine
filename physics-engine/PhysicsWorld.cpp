@@ -1,5 +1,6 @@
 #include"PhysicsWorld.h"
 #include"RigidBody.h"
+#include"Transform.h"
 
 
 PhysicsWorld::PhysicsWorld(const glm::vec3& gravity) {
@@ -14,6 +15,13 @@ void PhysicsWorld::Update(float dt) {
 	}
 	for (Rigidbody* body : bodies) {
 		body->Integrate(dt);
+	}
+	for (Rigidbody* body : bodies) {
+		float radius = 1.0f;
+		if (body->transform->position.y - radius < groundHeight) {
+			body->transform->position.y = groundHeight + radius;
+			body->velocity.y *= -0.5f;
+		}
 	}
 	for (Rigidbody* body : bodies) {
 		body->ClearForces();

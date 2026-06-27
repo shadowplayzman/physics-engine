@@ -10,6 +10,7 @@ class PhysicsWorld {
 public:
 	std::vector<Rigidbody*> bodies;
 	glm::vec3 gravity;
+	float groundHeight=-10.0f;
 	PhysicsWorld(const glm::vec3& gravity);
 	void AddBody(Rigidbody* body);
 	void Update(float dt);
