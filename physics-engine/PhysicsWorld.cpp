@@ -1,5 +1,6 @@
 #include"PhysicsWorld.h"
 #include"RigidBody.h"
+#include"Collider.h"
 #include"Transform.h"
 
 
@@ -17,7 +18,9 @@ void PhysicsWorld::Update(float dt) {
 		body->Integrate(dt);
 	}
 	for (Rigidbody* body : bodies) {
-		float radius = 1.0f;
+		SphereCollider* sphere = static_cast<SphereCollider*>(body->collider);
+
+		float radius = sphere->radius;
 		if (body->transform->position.y - radius < groundHeight) {
 			body->transform->position.y = groundHeight + radius;
 			body->velocity.y *= -0.5f;

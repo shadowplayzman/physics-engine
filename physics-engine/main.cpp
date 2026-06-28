@@ -5,6 +5,7 @@
 #include"EBO.h"
 #include"PhysicsWorld.h"
 #include"ShaderClass.h"
+#include"Collider.h"
 #include"PrimitiveMeshFactory.h"
 #include"RigidBody.h"
 #include"Renderable.h"
@@ -15,7 +16,7 @@
 
 // size of the window
 const GLint width = 800, height = 800;
-PhysicsWorld world(glm::vec3(0.0f, -1.81f, 0.0f));
+PhysicsWorld world(glm::vec3(0.0f, 0.0f, 0.0f));
 
 
 int main() {
@@ -86,18 +87,33 @@ int main() {
 
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f,12.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f,20.0f));
 
 	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 	Rigidbody body(1.0f);
+	Rigidbody body1(1.0f);
+
+	
 
 	Renderable sphere;
 	sphere.mesh = &sphereMesh;
+	Renderable sphere1;
+	sphere1.mesh = &sphereMesh;
+
+	SphereCollider sphereCollider(1.0f);
+	body.collider = &sphereCollider;
+	SphereCollider sphereCollider1(1.0f);
+	body1.collider = &sphereCollider1;
 
 	body.transform = &sphere.transform;
 	world.AddBody(&body);
+	body1.transform = &sphere1.transform;
+	body1.transform->position = glm::vec3(4.0f, 0.f, 0.0f);
+	body1.velocity= glm::vec3(4.0f, 0.f, 0.0f);
+	body1.mass=5.0f;
+	world.AddBody(&body1);
 
-	float lastFrame = 0;
+	float lastFrame = glfwGetTime();
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
@@ -118,6 +134,7 @@ int main() {
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 		shaderProgram.Activate(); 
 		sphere.Draw(shaderProgram, camera);
+		sphere1.Draw(shaderProgram, camera);
 
 
 		glfwSwapBuffers(window);
