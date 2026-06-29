@@ -9,13 +9,12 @@
 
 class Renderable {
 	public:
-		Transform transform;
 		Mesh* mesh = nullptr;
 
 		Material material;
 		Renderable();
 
-		void Draw(Shader& shader, Camera& camera);
+		void Draw(Shader& shader, Camera& camera,const Transform& transform);
 };
 
 

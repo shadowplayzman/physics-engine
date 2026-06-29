@@ -3,11 +3,11 @@
 #include"Texture.h" 
 #include"Transform.h"
 #include"EBO.h"
-#include"PhysicsWorld.h"
 #include"ShaderClass.h"
-#include"Collider.h"
+#include"Universe.h"
+#include"GravitySolver.h"
 #include"PrimitiveMeshFactory.h"
-#include"RigidBody.h"
+#include"CelestialBody.h"
 #include"Renderable.h"
 #include"VAO.h"
 #include"Camera.h"
@@ -16,7 +16,7 @@
 
 // size of the window
 const GLint width = 800, height = 800;
-PhysicsWorld world(glm::vec3(0.0f, 0.0f, 0.0f));
+Universe universe;
 
 
 int main() {
@@ -90,28 +90,23 @@ int main() {
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f,20.0f));
 
 	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
-	Rigidbody body(1.0f);
-	Rigidbody body1(1.0f);
+	
+	CelestialBody sun(100.0f);
+	CelestialBody earth(1.0f);
 
 	
 
 	Renderable sphere;
-	sphere.mesh = &sphereMesh;
+	sun.renderable.mesh = &sphereMesh;
 	Renderable sphere1;
-	sphere1.mesh = &sphereMesh;
+	earth.renderable.mesh = &sphereMesh;
 
-	SphereCollider sphereCollider(1.0f);
-	body.collider = &sphereCollider;
-	SphereCollider sphereCollider1(1.0f);
-	body1.collider = &sphereCollider1;
 
-	body.transform = &sphere.transform;
-	world.AddBody(&body);
-	body1.transform = &sphere1.transform;
-	body1.transform->position = glm::vec3(4.0f, 0.f, 0.0f);
-	body1.velocity= glm::vec3(4.0f, 0.f, 0.0f);
-	body1.mass=5.0f;
-	world.AddBody(&body1);
+	sun.transform.position = glm::vec3(0.0f);
+	earth.transform.position = glm::vec3(5.0f, 0.0f, 0.0f);
+
+	universe.AddBody(&sun);
+	universe.AddBody(&earth);
 
 	float lastFrame = glfwGetTime();
 	//main loop
@@ -126,15 +121,15 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		world.Update(dt);
+		universe.Update(dt);
 		//use the shader program ,bind the array,and the draw the triangle
 
 
 		camera.Inputs(window);
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 		shaderProgram.Activate(); 
-		sphere.Draw(shaderProgram, camera);
-		sphere1.Draw(shaderProgram, camera);
+		sun.renderable.Draw(shaderProgram, camera,sun.transform);
+		earth.renderable.Draw(shaderProgram, camera,earth.transform);
 
 
 		glfwSwapBuffers(window);
