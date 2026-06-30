@@ -1,97 +1,159 @@
 # Physics Engine
 
-A custom physics engine and rendering engine written in C++ using OpenGL.
+A physics and astrophysics engine written from scratch in **C++** using **OpenGL**. The project focuses on building a realistic simulation framework using real-world physics, SI units, and modern engine architecture.
+
+The long-term goal is to evolve this project from a Newtonian gravity simulator into a full astrophysics engine capable of simulating orbital mechanics, N-body systems, and eventually General Relativity phenomena such as black holes, gravitational lensing, and accretion disks.
+
+---
 
 ## Current Features
 
 ### Rendering
-
-* OpenGL 3.3 Core Profile
-* Custom Shader System
-* VAO / VBO / EBO abstraction
-* Texture Loading with stb_image
-* Camera System with WASD + Mouse Controls
-* Phong Lighting
-* Point Lights
-* Directional Lights
-* Spotlight Support
-* 3D Model Loading using Assimp
-* Mesh Rendering Pipeline
+- OpenGL 3.3 Core Profile
+- Phong Lighting
+- Mesh Rendering
+- Procedural Sphere Generation
+- Transform System
+- Orbit Camera
+- Mouse Zoom
+- Double Precision World Coordinates
 
 ### Physics
+- Newtonian Gravitation
+- N-Body Gravity Solver
+- Force Accumulation
+- Velocity Integration
+- Stable Planetary Orbits
+- Time Scaling
+- SI Unit System
 
-* PhysicsWorld Simulation
-* Gravity
-* Force Integration
-* Velocity and Acceleration Updates
-* Multiple Body Support
-* Circle Collision Detection
-* Collision Resolution
+### Simulation
+- Universe Management
+- Celestial Body System
+- Real Astronomical Constants
+- Real Planetary Masses
+- Real Planetary Radii
+- Real Orbital Velocities
+- Visual Planet Scaling (independent of physics)
 
-### Engine Architecture
+---
 
-* Custom Mesh Class
-* Custom Model Class
-* Custom Texture Class
-* Custom Shader Class
-* Custom Camera Class
-* PhysicsWorld Management
+## Current Simulation
+
+The engine currently simulates:
+
+- ☀️ Sun
+- 🌍 Earth
+- ♂️ Mars
+- ♃ Jupiter
+
+Each body uses real astronomical values for:
+
+- Mass
+- Radius
+- Orbital Distance
+- Orbital Velocity
+
+---
+
+## Project Structure
+
+```
+Physics Engine
+│
+├── Physics
+│   ├── Universe
+│   ├── CelestialBody
+│   └── GravitySolver
+│
+├── Rendering
+│   ├── Mesh
+│   ├── Renderable
+│   ├── Camera
+│   ├── Shader
+│   └── Transform
+│
+└── Utilities
+    └── Constants
+```
+
+---
 
 ## Technologies Used
 
-* C++
-* OpenGL
-* GLFW
-* GLEW
-* GLM
-* stb_image
-* Assimp
+- C++
+- OpenGL
+- GLFW
+- GLEW
+- GLM
 
-## Project Roadmap
+---
 
-### Completed
+## Roadmap
 
-* [x] OpenGL Setup
-* [x] 2D Rendering
-* [x] Texturing
-* [x] Shader System
-* [x] PhysicsWorld
-* [x] Gravity Simulation
-* [x] 3D Camera
-* [x] Lighting System
-* [x] Model Loading
-* [x] Assimp Integration
+### Engine Architecture
+- [x] Universe class
+- [x] CelestialBody class
+- [x] Gravity solver
+- [x] Transform system
+- [x] Orbit camera
+- [x] Visual scaling
+- [ ] SolarSystemFactory
+- [ ] Renderer abstraction
 
-### In Progress
+### Rendering
+- [x] 3D sphere rendering
+- [x] Lighting
+- [ ] Planet textures
+- [ ] Skybox
+- [ ] Orbit trails
+- [ ] Atmospheric rendering
 
-* [ ] Solar System Simulation
-* [ ] Sphere Rendering System
-* [ ] Planet Class Architecture
-* [ ] Orbital Mechanics
+### Physics
+- [x] Newtonian gravity
+- [x] SI unit system
+- [x] Stable circular orbits
+- [ ] Velocity Verlet integration
+- [ ] Collision detection
+- [ ] Planet merging
+- [ ] Adaptive timestep
 
-### Planned
+### Astronomy
+- [ ] Complete Solar System
+- [ ] Moon system
+- [ ] Asteroid belt
+- [ ] Comets
+- [ ] Artificial satellites
 
-* [ ] Newtonian Gravity Simulation
-* [ ] N-Body Simulation
-* [ ] Rigid Body System
-* [ ] Broad Phase Collision Detection
-* [ ] Narrow Phase Collision Detection
-* [ ] Constraint Solver
-* [ ] 3D Physics Engine
-* [ ] Spatial Partitioning
-* [ ] General Relativity Experiments
+### Future Goals
+- [ ] Black hole simulation
+- [ ] Schwarzschild metric
+- [ ] Gravitational lensing
+- [ ] Accretion disks
+- [ ] Time dilation
+- [ ] Binary black holes
 
-## Example
+---
 
-Current model loading and lighting:
+## Why SI Units?
 
-* Textured 3D model rendering
-* Dynamic camera controls
-* Multiple lighting models
-* Real-time rendering pipeline
+All physics calculations use real-world SI units:
 
-## Author
+- Distance → meters
+- Mass → kilograms
+- Time → seconds
+- Velocity → meters/second
 
-Manroop Singh
+This allows the engine to simulate realistic orbital mechanics while using a separate rendering scale for visualization.
 
-Built as a long-term project to learn graphics programming, physics simulation, and engine architecture from scratch.
+---
+
+## Current Status
+
+The engine has successfully transitioned from a rendering project into a simulation framework with a clean separation between rendering and physics. The current focus is improving engine architecture, visualization tools, and expanding the astrophysics simulation.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
