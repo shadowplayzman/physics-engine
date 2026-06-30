@@ -76,7 +76,7 @@ vec4 pointLight(){
 	return (diffuseColor * lightColor * (diffuse*inten + ambient )+specMap*specular*inten)*lightColor;
 }
 vec4 direcLight(){
-vec3 lightVec=lightPos - crntPos;
+	vec3 lightVec=lightPos - crntPos;
 	float dist=length(lightVec);
 	float a=2.0;
 	float b=0.7;

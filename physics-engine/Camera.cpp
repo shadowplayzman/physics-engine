@@ -11,7 +11,7 @@ void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
 	glm::mat4 projection = glm::mat4(1.0f);
 
 
-	view = glm::lookAt(Position , Position + Orientation, Up);
+	view = glm::lookAt(Position , Target, Up);
 	projection = glm::perspective(glm::radians(FOVdeg), (float)width / (float)height, nearPlane, farPlane);
 	camMatrix = projection * view;
 }
@@ -21,9 +21,16 @@ void Camera::Matrix(Shader& shader, const char* uniform) {
 
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(camMatrix));
 }
+void Camera::ProccessScroll(double offset) {
+	constexpr float MinZoom = 5.0f;
+	constexpr float MaxZoom = 5000.0f;
+
+	Distance -= offset *Distance* 0.1f;
+	Distance = glm::clamp(Distance, MinZoom, MaxZoom);
+}
 
 void Camera::Inputs(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		Position += speed * Orientation;
 	}	
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
@@ -46,7 +53,7 @@ void Camera::Inputs(GLFWwindow* window) {
 	}
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) {
 		speed = 0.1f;
-	}
+	}*/
 
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
 		double mousex, mousey;
@@ -60,11 +67,19 @@ void Camera::Inputs(GLFWwindow* window) {
 		float rotx = sensitivity * (float)(mousey - (height / 2)) / height;
 		float roty = sensitivity * (float)(mousex - (width / 2)) / height;
 
-		glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotx), glm::normalize(glm::cross(Orientation, Up)));
-		if (!((glm::angle(newOrientation, Up) <= glm::radians(5.0f)) or (glm::angle(newOrientation, -Up) <= glm::radians(5.0f)))) {
-			Orientation=newOrientation;
-		}
-		Orientation = glm::rotate(Orientation, glm::radians(-roty), Up);
+		Pitch -= rotx;
+		Yaw -= roty;
+		
+		Pitch = glm::clamp(Pitch, -89.0f, 89.0f);
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+		direction.y = sin(glm::radians(Pitch));
+		direction.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+
+		Orientation = glm::normalize(direction);
+		Position = Target - Orientation * Distance;
+
 		glfwSetCursorPos(window, (width / 2), (height / 2));
 	}
 	else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {

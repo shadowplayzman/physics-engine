@@ -11,6 +11,10 @@
 const GLint width = 800, height = 800;
 Universe universe;
 
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
+	camera->ProccessScroll(yoffset);
+}
 
 int main() {
 
@@ -81,13 +85,15 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f,150.0f));
+	glfwSetWindowUserPointer(window, &camera);
+	glfwSetScrollCallback(window, ScrollCallback);
 
 	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 	
-	CelestialBody sun(Constants::Astronomy::SolarMass);
-	CelestialBody earth(Constants::Astronomy::EarthMass);
-	CelestialBody mars(Constants::Astronomy::EarthMass * 0.05);
-	CelestialBody jupiter(Constants::Astronomy::EarthMass*318);
+	CelestialBody sun(Constants::Sun::Mass,Constants::Sun::Radius);
+	CelestialBody earth(Constants::Earth::Mass, Constants::Earth::Radius);
+	CelestialBody mars(Constants::Mars::Mass, Constants::Mars::Radius);
+	CelestialBody jupiter(Constants::Jupiter::Mass, Constants::Jupiter::Radius);
 
 	
 
@@ -100,13 +106,13 @@ int main() {
 
 	//positions
 	sun.transform.position = glm::dvec3(0.0f);
-	earth.transform.position = glm::dvec3(Constants::Astronomy::AU, 0.0f, 0.0f);
-	mars.transform.position = glm::dvec3(Constants::Astronomy::AU * 0.387, 0.0f, 0.0f);
-	jupiter.transform.position = glm::dvec3(Constants::Astronomy::AU*5.2, 0.0f, 0.0f);
+	earth.transform.position = glm::dvec3(Constants::Earth::Distance, 0.0f, 0.0f);
+	mars.transform.position = glm::dvec3(Constants::Mars::Distance, 0.0f, 0.0f);
+	jupiter.transform.position = glm::dvec3(Constants::Jupiter::Distance, 0.0f, 0.0f);
 	//velovity
-	earth.velocity = glm::dvec3(0.0, Constants::Astronomy::EarthOrbitalSpeed, 0.0);
-	mars.velocity = glm::dvec3(0.0, Constants::Astronomy::EarthOrbitalSpeed * 1.6, 0.0);
-	jupiter.velocity = glm::dvec3(0.0, Constants::Astronomy::EarthOrbitalSpeed*0.43, 0.0);
+	earth.velocity = glm::dvec3(0.0, Constants::Earth::OrbitalSpeed, 0.0);
+	mars.velocity = glm::dvec3(0.0, Constants::Mars::OrbitalSpeed, 0.0);
+	jupiter.velocity = glm::dvec3(0.0, Constants::Jupiter::OrbitalSpeed, 0.0);
 
 	universe.AddBody(&sun);
 	universe.AddBody(&earth);
@@ -133,10 +139,10 @@ int main() {
 		camera.Inputs(window);
 		camera.updateMatrix(90.0f, 0.1f, 100000.0f);
 		shaderProgram.Activate(); 
-		sun.renderable.Draw(shaderProgram, camera,sun.transform);
-		earth.renderable.Draw(shaderProgram, camera, earth.transform);
-		mars.renderable.Draw(shaderProgram, camera, mars.transform);
-		jupiter.renderable.Draw(shaderProgram, camera,jupiter.transform);
+		sun.renderable.Draw(shaderProgram, camera,sun.transform,sun.radius,20.0);
+		earth.renderable.Draw(shaderProgram, camera, earth.transform,earth.radius,500.0);
+		mars.renderable.Draw(shaderProgram, camera, mars.transform,mars.radius,400.0);
+		jupiter.renderable.Draw(shaderProgram, camera,jupiter.transform,jupiter.radius,80.0);
 
 		glfwSwapBuffers(window);
 

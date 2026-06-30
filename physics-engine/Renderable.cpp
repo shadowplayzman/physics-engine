@@ -1,14 +1,17 @@
 #include"Renderable.h"
 #include"Constants.h"
+#include"CelestialBody.h"
 
 Renderable::Renderable() {
 
 }
 
-void Renderable::Draw(Shader& shader, Camera& camera,const Transform& transform) {
+void Renderable::Draw(Shader& shader, Camera& camera,const Transform& transform,double radius,double visualScale) {
 
 	Transform renderTransform = transform;
-	renderTransform.position /= Constants::Rendering::RenderScale;
+	renderTransform.position /= Constants::Rendering::DistanceScale;
+
+	double renderRadius = (radius / Constants::Rendering::DistanceScale) * visualScale;
 	if (mesh == nullptr) 
 		return;
 	
@@ -17,8 +20,6 @@ void Renderable::Draw(Shader& shader, Camera& camera,const Transform& transform)
 		renderTransform.GetMatrix(),
 		renderTransform.position,
 		renderTransform.rotation,
-		renderTransform.scale,
+		renderTransform.scale=glm::vec3(renderRadius),
 		material);
-	std::cout << renderTransform.position.x << " "
-		<< renderTransform.position.y << '\n';
 }

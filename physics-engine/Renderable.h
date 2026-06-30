@@ -14,7 +14,7 @@ class Renderable {
 		Material material;
 		Renderable();
 
-		void Draw(Shader& shader, Camera& camera,const Transform& transform);
+		void Draw(Shader& shader, Camera& camera,const Transform& transform,double radius,double visualScale);
 };
 
 

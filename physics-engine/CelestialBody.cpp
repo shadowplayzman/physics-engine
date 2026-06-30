@@ -1,7 +1,8 @@
 #include"CelestialBody.h"
 
-CelestialBody::CelestialBody(double mass) {
+CelestialBody::CelestialBody(double mass,double radius) {
 	this->mass = mass;
+	this->radius = radius;
 }
 
 void CelestialBody::AddForce(const glm::dvec3& force) {
