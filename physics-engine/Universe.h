@@ -10,7 +10,7 @@ class Universe {
 		std::vector<CelestialBody*> bodies;
 		void AddBody(CelestialBody* body);
 
-		void Update(float dt);
+		void Update(double dt);
 };
 
 #endif // !UNIVERSE_H

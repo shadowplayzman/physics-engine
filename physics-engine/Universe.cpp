@@ -6,7 +6,7 @@ void Universe::AddBody(CelestialBody* body) {
 	bodies.push_back(body);
 }
 
-void Universe::Update(float dt) {
+void Universe::Update(double dt) {
 	GravitySolver::ApplyGravity(bodies);
 	
 	

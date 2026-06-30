@@ -11,17 +11,18 @@ public:
 	Renderable renderable;
 
 
-	float mass;
+	double mass;
 
-	glm::vec3 velocity = glm::vec3(0.0f);
-	glm::vec3 accelration = glm::vec3(0.0f);
-	glm::vec3 accumulatedForce = glm::vec3(0.0f);
+	glm::dvec3 position;
+	glm::dvec3 velocity = glm::dvec3(0.0f);
+	glm::dvec3 accelration = glm::dvec3(0.0f);
+	glm::dvec3 accumulatedForce = glm::dvec3(0.0f);
 
-	CelestialBody(float mass = 1.0f);
+	CelestialBody(double mass = 1.0f);
 
-	void AddForce(const glm::vec3& force);
+	void AddForce(const glm::dvec3& force);
 
-	void Integrate(float dt);
+	void Integrate(double dt);
 
 	void ClearForces();
 };

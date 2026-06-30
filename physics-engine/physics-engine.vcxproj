@@ -190,6 +190,7 @@
     <ClInclude Include="CelestialBody.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisonSystem.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="GravitySolver.h" />
     <ClInclude Include="Material.h" />

@@ -1,14 +1,14 @@
 #include"CelestialBody.h"
 
-CelestialBody::CelestialBody(float mass) {
+CelestialBody::CelestialBody(double mass) {
 	this->mass = mass;
 }
 
-void CelestialBody::AddForce(const glm::vec3& force) {
+void CelestialBody::AddForce(const glm::dvec3& force) {
 	accumulatedForce += force;
 }
 
-void CelestialBody::Integrate(float dt) {
+void CelestialBody::Integrate(double dt) {
 	accelration = accumulatedForce / mass;
 
 	velocity += accelration * dt;
@@ -18,5 +18,5 @@ void CelestialBody::Integrate(float dt) {
 }
 
 void CelestialBody::ClearForces() {
-	accumulatedForce = glm::vec3(0.0f);
+	accumulatedForce = glm::dvec3(0.0f);
 }
