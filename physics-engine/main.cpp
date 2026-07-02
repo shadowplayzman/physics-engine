@@ -4,6 +4,7 @@
 #include "Universe.h"
 #include "CelestialBody.h"
 #include"SolarSystemFactory.h"
+#include"TrailRenderer.h"
 #include "Camera.h"
 #include"Constants.h"
 
@@ -69,6 +70,9 @@ int main() {
 	Shader shaderProgram("default.vert", "default.frag");;
 
 	Shader lightShader("light.vert", "light.frag");
+	Shader trailShader("trail.vert", "trail.frag");
+
+	TrailRenderer trailRenderer;
 
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -124,6 +128,7 @@ int main() {
 
 		for (CelestialBody* body : universe.bodies) {
 			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius, body->visualScale);
+			trailRenderer.Draw(*body, trailShader, camera);
 		}
 
 		glfwSwapBuffers(window);

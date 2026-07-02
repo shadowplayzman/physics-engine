@@ -25,3 +25,18 @@ void VBO::Delete()
 {
 	glDeleteBuffers(1, &ID);
 }
+
+void VBO::Update(const void* data, GLsizeiptr size, GLenum usage) {
+
+	glBindBuffer(GL_ARRAY_BUFFER, ID);
+	glBufferData(GL_ARRAY_BUFFER, size, data, usage);
+}
+void VBO::Update(const std::vector<glm::vec3>& vertices) {
+	glBindBuffer(GL_ARRAY_BUFFER, ID);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(glm::vec3), vertices.data(), GL_DYNAMIC_DRAW);
+}
+
+
+VBO::VBO() {
+	glGenBuffers(1, &ID);
+}

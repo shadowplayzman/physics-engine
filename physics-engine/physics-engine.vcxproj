@@ -176,6 +176,7 @@
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TrialRenderer.cpp" />
     <ClCompile Include="Universe.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
@@ -185,6 +186,8 @@
     <None Include="default.vert" />
     <None Include="light.frag" />
     <None Include="light.vert" />
+    <None Include="trail.frag" />
+    <None Include="trail.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="SolarSystemFactory.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TrailRenderer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Universe.h" />
     <ClInclude Include="VAO.h" />

@@ -23,6 +23,11 @@ public:
 	void  Bind();
 	void Unbind();
 	void Delete();
+	void Update(const void* data, GLsizeiptr size, GLenum usage = GL_DYNAMIC_DRAW);
+	void Update(const std::vector<glm::vec3>& vertices);
+	VBO();
+
+
 };
 
 
