@@ -48,6 +48,7 @@ int main() {
 
 	//set context
 	glfwMakeContextCurrent(window);
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
 	glfwSwapInterval(1);
 
@@ -90,19 +91,22 @@ int main() {
 	//enabled this to allow opengl to render objects with depth
 	glEnable(GL_DEPTH_TEST);
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f,150.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 150.0f));
 	//allow us to scroll to zoom in and out
 	glfwSetWindowUserPointer(window, &camera);
 	glfwSetScrollCallback(window, ScrollCallback);
 
 	//creating a mesh to render all the the spheres
-	Mesh sphereMesh =PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
+	Mesh sphereMesh = PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 
 	//calling the function to create the solar sytem
 	SolarSystemFactory::CreateSolarSystem(universe, sphereMesh);
 
+	size_t currentTargetIndex = 0;
+	bool tabWasPressed = false;
+
 	//allows to orbit the camera around an object in the universe class
-	camera.SetTarget(universe.GetBody(5));
+	camera.SetTarget(universe.GetBody(currentTargetIndex));
 
 	double lastFrame = glfwGetTime();
 	//main loop
@@ -110,14 +114,24 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		//get and handle user inputs
 		glfwPollEvents();
+		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
+
+		if (tabPressed && !tabWasPressed) {
+			currentTargetIndex++;
+			if (currentTargetIndex >= universe.BodyCount()) {
+				currentTargetIndex = 0;
+			}
+			camera.SetTarget(universe.GetBody(currentTargetIndex));
+		}
+		tabWasPressed = tabPressed;
 
 		//calculating dt by subrating last frame from current frame
 		double currentFrame = glfwGetTime();
-		double dt = (currentFrame - lastFrame)*Constants::Rendering::Timescale;
+		double dt = (currentFrame - lastFrame) * Constants::Rendering::Timescale;
 		lastFrame = currentFrame;
 		//clear buffer
-		glClearColor(0.07f, 0.13f, 0.17f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//updating the universe to all ohysics
 		universe.Update(dt);
@@ -126,7 +140,7 @@ int main() {
 		camera.Inputs(window);
 		//defining the fov,near angle and far angle fot the camera
 		camera.updateMatrix(90.0f, 0.1f, 100000.0f);
-		shaderProgram.Activate(); 
+		shaderProgram.Activate();
 
 		//geting each body from the universe and rendering it also rendering its trail
 		for (CelestialBody* body : universe.bodies) {
@@ -148,4 +162,5 @@ int main() {
 	glfwTerminate();
 
 	return 0;
+
 }

@@ -37,6 +37,7 @@ void Camera::ProccessScroll(double offset) {
 //we can set target to which we want to revolve our camera around
 void Camera::SetTarget(CelestialBody* body) {
 	targetBody = body;
+	DesiredTarget = glm::vec3(body->transform.position / Constants::Rendering::DistanceScale);
 }
 //takes all the inputs for the camera like moving,scrolling,etc
 void Camera::Inputs(GLFWwindow* window) {
@@ -65,7 +66,8 @@ void Camera::Inputs(GLFWwindow* window) {
 		speed = 0.1f;
 	}*/
 	if (targetBody != nullptr) {
-		Target = glm::vec3(targetBody->transform.position / Constants::Rendering::DistanceScale);
+		DesiredTarget = glm::vec3(targetBody->transform.position / Constants::Rendering::DistanceScale);
+		Target = glm::mix(Target, DesiredTarget, 0.02f);
 		Position = Target - Orientation * Distance;
 	}
 	//checks if it its the first click if yes it resets the camera back to orgin 
