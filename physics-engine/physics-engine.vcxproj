@@ -211,6 +211,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="ShaderClass.h" />
+    <ClInclude Include="SImulationState.h" />
     <ClInclude Include="SolarSystemFactory.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TrailRenderer.h" />

@@ -7,11 +7,14 @@
 #include"TrailRenderer.h"
 #include "Camera.h"
 #include"Constants.h"
+#include"SImulationState.h"
 
 
 // size of the window
 const GLint width = 800, height = 800;
 Universe universe;
+SimulationState simulationState = SimulationState::Running;
+
 
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
@@ -122,6 +125,7 @@ int main() {
 				currentTargetIndex = 0;
 			}
 			camera.SetTarget(universe.GetBody(currentTargetIndex));
+			simulationState = SimulationState::CameraTranstion;
 		}
 		tabWasPressed = tabPressed;
 
@@ -134,10 +138,19 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//updating the universe to all ohysics
-		universe.Update(dt);
+		camera.Inputs(window);
+		bool resumeSimulation = false;
+		if (simulationState == SimulationState::CameraTranstion && !camera.IsTranstioning()) {
+			resumeSimulation = true;
+		}
+		if (simulationState == SimulationState::Running) {
+			universe.Update(dt);
+		}
+		if (resumeSimulation) {
+			simulationState = SimulationState::Running;
+		}
 
 		//allows to control camera
-		camera.Inputs(window);
 		//defining the fov,near angle and far angle fot the camera
 		camera.updateMatrix(90.0f, 0.1f, 100000.0f);
 		shaderProgram.Activate();

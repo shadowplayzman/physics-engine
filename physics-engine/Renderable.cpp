@@ -12,6 +12,7 @@ void Renderable::Draw(Shader& shader, Camera& camera,const Transform& transform,
 	renderTransform.position /= Constants::Rendering::DistanceScale;
 
 	double renderRadius = (radius / Constants::Rendering::DistanceScale) * visualScale;
+
 	if (mesh == nullptr) 
 		return;
 	

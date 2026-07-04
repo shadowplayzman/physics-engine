@@ -8,7 +8,8 @@ namespace Constants {
 	}
 	namespace Rendering {
 		constexpr double DistanceScale = Astronomy::AU / 50.0;
-		constexpr double Timescale = 8460000.0;
+		constexpr double RadiusScale = Astronomy::AU/50.0;
+		constexpr double Timescale = 2000000.0;
 		constexpr double VisualExaggeration = 500.0;
 	}
 	namespace Sun {

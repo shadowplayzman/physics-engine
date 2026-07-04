@@ -33,12 +33,18 @@ void Camera::ProccessScroll(double offset) {
 
 	Distance -= offset *Distance* 0.1f;
 	Distance = glm::clamp(Distance, MinZoom, MaxZoom);
+
+	TransitionDistance = Distance;
 }
 //we can set target to which we want to revolve our camera around
 void Camera::SetTarget(CelestialBody* body) {
 	targetBody = body;
-	DesiredTarget = glm::vec3(body->transform.position / Constants::Rendering::DistanceScale);
+	TransitionTarget =glm::vec3(body->transform.position /Constants::Rendering::DistanceScale);
+	TransitionDistance = (body->radius / Constants::Rendering::RadiusScale) * body->visualScale * 8.0f;
+	transitioning = true;
+
 }
+
 //takes all the inputs for the camera like moving,scrolling,etc
 void Camera::Inputs(GLFWwindow* window) {
 	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
@@ -65,10 +71,23 @@ void Camera::Inputs(GLFWwindow* window) {
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) {
 		speed = 0.1f;
 	}*/
+	constexpr float CameraSmoothness = 0.03f;
 	if (targetBody != nullptr) {
-		DesiredTarget = glm::vec3(targetBody->transform.position / Constants::Rendering::DistanceScale);
-		Target = glm::mix(Target, DesiredTarget, 0.02f);
-		Position = Target - Orientation * Distance;
+
+		if (transitioning) {
+			Target = glm::mix(Target, TransitionTarget, CameraSmoothness);
+			Distance = glm::mix(Distance, TransitionDistance, CameraSmoothness);
+
+			Position = Target - Orientation * Distance;
+			if (glm::distance(Target, TransitionTarget) < 0.05f && std::abs(Distance - TransitionDistance) < 0.5f) {
+				transitioning = false;
+			}
+		}
+		else {
+			Target = glm::vec3(targetBody->transform.position/Constants::Rendering::DistanceScale);
+			Position = Target - Orientation * Distance;
+		}
+
 	}
 	//checks if it its the first click if yes it resets the camera back to orgin 
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
@@ -103,4 +122,7 @@ void Camera::Inputs(GLFWwindow* window) {
 		firstClick = true;
 	}
 
+}
+bool Camera::IsTranstioning() const {
+	return transitioning;
 }
