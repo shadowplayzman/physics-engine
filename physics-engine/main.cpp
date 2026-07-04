@@ -8,6 +8,9 @@
 #include "Camera.h"
 #include"Constants.h"
 #include"SImulationState.h"
+#include "imgui.h"
+#include"backends/imgui_impl_glfw.h"
+#include"backends/imgui_impl_opengl3.h"
 
 
 // size of the window
@@ -66,6 +69,18 @@ int main() {
 
 	}
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+
 	//viewport
 	glViewport(0, 0, bufferwidth, bufferheight);
 
@@ -115,8 +130,17 @@ int main() {
 	//main loop
 
 	while (!glfwWindowShouldClose(window)) {
-		//get and handle user inputs
 		glfwPollEvents();
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("Physics Engine");
+
+		ImGui::Text("Hello, Solar System!");
+
+		ImGui::End();
+		//get and handle user inputs
 		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
 
 		if (tabPressed && !tabWasPressed) {
@@ -160,6 +184,8 @@ int main() {
 			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius, body->visualScale);
 			trailRenderer.Draw(*body, trailShader, camera);
 		}
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwSwapBuffers(window);
 
@@ -170,6 +196,9 @@ int main() {
 
 	//cleanup
 
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 	shaderProgram.Delete();
 	glfwDestroyWindow(window);
 	glfwTerminate();
