@@ -11,6 +11,10 @@ Camera::Camera(int width, int height, glm::vec3 position) {
 	Position = position;
 }
 
+CelestialBody* Camera::GetTargetBody() const {
+	return targetBody;
+}
+
 //updates the matrix 
 void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
 	glm::mat4 view = glm::mat4(1.0f);

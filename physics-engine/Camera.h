@@ -38,6 +38,7 @@ public:
 	bool transitioning = false;
 
 	Camera(int width, int height, glm::vec3 position);
+	CelestialBody* GetTargetBody() const;
 
 	void updateMatrix(float FOVdeg, float nearPlane, float farPlane);
 	void Matrix(Shader& shader, const char* uniform);
@@ -45,6 +46,7 @@ public:
 	void Inputs(GLFWwindow* window);
 	bool IsTranstioning() const;
 	void SetTarget(CelestialBody* body);
+
 private:
 	CelestialBody* targetBody = nullptr;
 };

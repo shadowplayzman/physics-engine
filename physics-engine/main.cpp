@@ -16,7 +16,7 @@
 
 
 // size of the window
-const GLint width = 800, height = 800;
+const GLint width = 1920, height = 1080;
 Universe universe;
 SimulationState simulationState = SimulationState::Running;
 SimulationSettings simulationsettings;
@@ -141,7 +141,7 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ui.Draw(simulationsettings);
+		ui.Draw(simulationsettings,simulationState,universe,camera);
 		//get and handle user inputs
 		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
 
@@ -169,8 +169,9 @@ int main() {
 		if (simulationState == SimulationState::CameraTranstion && !camera.IsTranstioning()) {
 			resumeSimulation = true;
 		}
-		if (simulationState == SimulationState::Running) {
+		if (!simulationsettings.paused && simulationState == SimulationState::Running) {
 			universe.Update(dt);
+			simulationsettings.SimulationTime += dt;
 		}
 		if (resumeSimulation) {
 			simulationState = SimulationState::Running;

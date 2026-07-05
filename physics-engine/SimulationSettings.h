@@ -3,7 +3,10 @@
 
 struct SimulationSettings {
 	double TimeScale = 2000000.0;
+	double SimulationTime = 0.0;
+
 	bool paused = false;
+	bool ResetRequested = false;
 };
 
 

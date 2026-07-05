@@ -12,6 +12,7 @@ public:
 	Transform transform ;
 	Renderable renderable;
 
+	std::string Name;
 
 	double mass;
 	double radius;

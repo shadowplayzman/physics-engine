@@ -7,6 +7,7 @@ void SolarSystemFactory::CreateSun(Universe& universe, Mesh& sphereMesh) {
 	sun->renderable.mesh = &sphereMesh;
 	sun->transform.position = glm::dvec3(0.0f);
 	sun->visualScale = 25.0f;
+	sun->Name = "Sun";
 	universe.AddBody(sun);
 }
 
@@ -16,6 +17,7 @@ void SolarSystemFactory::CreateMercury(Universe& universe, Mesh& sphereMesh) {
 	mercury->transform.position = glm::dvec3(Constants::Mercury::Distance, 0.0f, 0.0f);
 	mercury->velocity = glm::dvec3(0.0, Constants::Mercury::OrbitalSpeed, 0.0);
 	mercury->visualScale = 2000.0f;
+	mercury->Name = "Mercury";
 	universe.AddBody(mercury);
 }
 
@@ -25,6 +27,7 @@ void SolarSystemFactory::CreateVenus(Universe& universe, Mesh& sphereMesh) {
 	venus->transform.position = glm::dvec3(Constants::Venus::Distance, 0.0f, 0.0f);
 	venus->velocity = glm::dvec3(0.0, Constants::Venus::OrbitalSpeed, 0.0);
 	venus->visualScale = 1600.0f;
+	venus->Name = "Venus";
 	universe.AddBody(venus);
 }
 
@@ -34,6 +37,7 @@ void SolarSystemFactory::CreateEarth(Universe& universe, Mesh& sphereMesh) {
 	earth->transform.position = glm::dvec3(Constants::Earth::Distance, 0.0f, 0.0f);
 	earth->velocity = glm::dvec3(0.0, Constants::Earth::OrbitalSpeed, 0.0);
 	earth->visualScale = 1600.0f;
+	earth->Name = "Earth";
 	universe.AddBody(earth);
 }
 
@@ -43,6 +47,7 @@ void SolarSystemFactory::CreateMars(Universe& universe, Mesh& sphereMesh) {
 	mars->transform.position = glm::dvec3(Constants::Mars::Distance, 0.0f, 0.0f);
 	mars->velocity = glm::dvec3(0.0, Constants::Mars::OrbitalSpeed, 0.0);
 	mars->visualScale = 1800.0f;
+	mars->Name = "Mars";
 	universe.AddBody(mars);
 }
 
@@ -52,6 +57,7 @@ void SolarSystemFactory::CreateJupiter(Universe& universe, Mesh& sphereMesh) {
 	jupiter->transform.position = glm::dvec3(Constants::Jupiter::Distance, 0.0f, 0.0f);
 	jupiter->velocity = glm::dvec3(0.0, Constants::Jupiter::OrbitalSpeed, 0.0);
 	jupiter->visualScale = 250.0f;
+	jupiter->Name = "Jupiter";
 	universe.AddBody(jupiter);
 
 }
@@ -61,6 +67,7 @@ void SolarSystemFactory::CreateSaturn(Universe& universe, Mesh& sphereMesh) {
 	saturn->transform.position = glm::dvec3(Constants::Saturn::Distance, 0.0f, 0.0f);
 	saturn->velocity = glm::dvec3(0.0, Constants::Saturn::OrbitalSpeed, 0.0);
 	saturn->visualScale = 300.0f;
+	saturn->Name = "Saturn";
 	universe.AddBody(saturn);
 
 }
@@ -71,6 +78,7 @@ void SolarSystemFactory::CreateUranus(Universe& universe, Mesh& sphereMesh) {
 	uranus->transform.position = glm::dvec3(Constants::Uranus::Distance, 0.0f, 0.0f);
 	uranus->velocity = glm::dvec3(0.0, Constants::Uranus::OrbitalSpeed, 0.0);
 	uranus->visualScale = 450.0f;
+	uranus->Name = "Uranus";
 	universe.AddBody(uranus);
 
 }
@@ -81,6 +89,7 @@ void SolarSystemFactory::CreateNeptune(Universe& universe, Mesh& sphereMesh) {
 	neptune->transform.position = glm::dvec3(Constants::Neptune::Distance, 0.0f, 0.0f);
 	neptune->velocity = glm::dvec3(0.0, Constants::Neptune::OrbitalSpeed, 0.0);
 	neptune->visualScale = 450.0f;
+	neptune->Name = "Neptune";
 	universe.AddBody(neptune);
 
 }
