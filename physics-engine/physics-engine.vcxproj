@@ -178,7 +178,9 @@
     <ClCompile Include="PrimitiveMeshFactory.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SandBoxUI.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
+    <ClCompile Include="SimulationSettings.cpp" />
     <ClCompile Include="SolarSystemFactory.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -226,8 +228,10 @@
     <ClInclude Include="PrimitiveMeshFactory.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="SandBoxUI.h" />
     <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="SImulationState.h" />
+    <ClInclude Include="SimulationSettings.h" />
+    <ClInclude Include="SimulationState.h" />
     <ClInclude Include="SolarSystemFactory.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TrailRenderer.h" />

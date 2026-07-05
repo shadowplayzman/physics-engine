@@ -1,6 +1,7 @@
 #include"Camera.h"
 #include"CelestialBody.h"
 #include"Constants.h"
+#include"IMGUI/imgui.h"
 #include"Universe.h"
 
 //to give camera the data for the height and width of the window
@@ -47,30 +48,6 @@ void Camera::SetTarget(CelestialBody* body) {
 
 //takes all the inputs for the camera like moving,scrolling,etc
 void Camera::Inputs(GLFWwindow* window) {
-	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		Position += speed * Orientation;
-	}	
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		Position += speed * -glm::normalize(glm::cross(Orientation,Up));
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		Position += speed * -Orientation;
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		Position += speed * glm::normalize(glm::cross(Orientation, Up));
-	}
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		Position += speed * Up;
-	}	
-	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-		Position += speed * -Up;
-	}	
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-		speed=0.4f;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) {
-		speed = 0.1f;
-	}*/
 	constexpr float CameraSmoothness = 0.03f;
 	if (targetBody != nullptr) {
 
@@ -88,6 +65,12 @@ void Camera::Inputs(GLFWwindow* window) {
 			Position = Target - Orientation * Distance;
 		}
 
+	}
+	ImGuiIO& io = ImGui::GetIO();
+
+	if (io.WantCaptureMouse)
+	{
+		return;
 	}
 	//checks if it its the first click if yes it resets the camera back to orgin 
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {

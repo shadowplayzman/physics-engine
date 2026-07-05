@@ -7,7 +7,9 @@
 #include"TrailRenderer.h"
 #include "Camera.h"
 #include"Constants.h"
-#include"SImulationState.h"
+#include"SimulationState.h"
+#include"SandBoxUI.h"
+#include"SimulationSettings.h"
 #include "imgui.h"
 #include"backends/imgui_impl_glfw.h"
 #include"backends/imgui_impl_opengl3.h"
@@ -17,6 +19,8 @@
 const GLint width = 800, height = 800;
 Universe universe;
 SimulationState simulationState = SimulationState::Running;
+SimulationSettings simulationsettings;
+
 
 
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
@@ -114,6 +118,8 @@ int main() {
 	glfwSetWindowUserPointer(window, &camera);
 	glfwSetScrollCallback(window, ScrollCallback);
 
+	SandBoxUI ui;
+
 	//creating a mesh to render all the the spheres
 	Mesh sphereMesh = PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 
@@ -135,11 +141,7 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::Begin("Physics Engine");
-
-		ImGui::Text("Hello, Solar System!");
-
-		ImGui::End();
+		ui.Draw(simulationsettings);
 		//get and handle user inputs
 		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
 
@@ -155,7 +157,7 @@ int main() {
 
 		//calculating dt by subrating last frame from current frame
 		double currentFrame = glfwGetTime();
-		double dt = (currentFrame - lastFrame) * Constants::Rendering::Timescale;
+		double dt = (currentFrame - lastFrame) *simulationsettings.TimeScale;
 		lastFrame = currentFrame;
 		//clear buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
