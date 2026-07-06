@@ -4,6 +4,9 @@
 CelestialBody::CelestialBody(double mass,double radius) {
 	this->mass = mass;
 	this->radius = radius;
+
+	originalMass = mass;
+	originalRadius = radius;
 }
 
 void CelestialBody::AddForce(const glm::dvec3& force) {

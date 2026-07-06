@@ -7,10 +7,15 @@
 #include"Camera.h"
 class SandBoxUI {
 	public:
-		void Draw(SimulationSettings& settings,
+		void DrawSimulationWindow(SimulationSettings& settings,
 			SimulationState& simualtionState,
 			Universe& universe,
 			Camera& camera);
+		void DrawPlanetWindow(SimulationSettings& settings,
+			SimulationState& simualtionState,
+			Universe& universe,
+			Camera& camera);
+
 };
 
 #endif // !SANDBOX_UI_H

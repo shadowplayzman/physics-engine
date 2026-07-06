@@ -16,6 +16,10 @@ public:
 
 	double mass;
 	double radius;
+
+	double originalMass;
+	double originalRadius;
+
 	double visualScale = 1.0f;
 	double trailTimer = 0.0;
 

@@ -141,7 +141,8 @@ int main() {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ui.Draw(simulationsettings,simulationState,universe,camera);
+		ui.DrawSimulationWindow(simulationsettings, simulationState, universe, camera);
+		ui.DrawPlanetWindow(simulationsettings,simulationState,universe,camera);
 		//get and handle user inputs
 		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
 
