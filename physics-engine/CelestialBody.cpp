@@ -16,7 +16,6 @@ void CelestialBody::AddForce(const glm::dvec3& force) {
 void CelestialBody::Integrate(double dt) {
 
 
-
 	accelration = accumulatedForce / mass;
 
 	velocity += accelration * dt;
@@ -25,14 +24,30 @@ void CelestialBody::Integrate(double dt) {
 
 	trailTimer += dt;
 
-	if (trailTimer >= TrailInterval) {
+	if (trailTimer >= trailSettings.trailInterval) {
 		trail.push_back(transform.position);
-		trailTimer -= TrailInterval;
-		if (trail.size() > 1500) {
+		trailTimer -= trailSettings.trailInterval;
+		while (trail.size() > trailSettings.maxStoredPoints) {
 		trail.erase(trail.begin());
 		}
 	}
 
+}
+
+void CelestialBody::SetRadiusPercentage(double percentage, bool preserveDensity) {
+	double scale = percentage / 100.0;
+	radius = originalRadius * scale;
+	if (preserveDensity) {
+		mass = originalMass * scale * scale * scale;
+	}
+}
+
+void CelestialBody::SetMassPercentage(double percentage) {
+	double scale = percentage / 100;
+	mass = originalMass * scale;
+}
+void CelestialBody::SetVelocity(glm::dvec3 newVelocity) {
+	velocity = newVelocity;
 }
 
 void CelestialBody::ClearForces() {

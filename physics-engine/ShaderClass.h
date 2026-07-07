@@ -2,6 +2,7 @@
 #define SHADER_CLASS_H
 
 #include<GL/glew.h>
+#include<glm/glm.hpp>
 #include<string>
 #include<fstream>
 #include<sstream>
@@ -23,6 +24,7 @@ public:
 	void Activate();
 	// Deletes the Shader Program
 	void Delete();
+	void SetVec3(const char* uniform, const glm::vec3& value);
 private:
 	void compileErrors(unsigned int shader, const char* type);
 };

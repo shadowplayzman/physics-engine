@@ -2,8 +2,8 @@
 
 // Outputs colors in RGBA
 out vec4 FragColor;
-
+uniform vec3 trailColor;
 void main()
 {
-FragColor = vec4(1.0,0.3,0.65,0.1);
+FragColor = vec4(trailColor,0.1);
    }

@@ -9,15 +9,23 @@ void TrailRenderer::Draw(const CelestialBody& body, Shader& shader, Camera& came
 	if (body.trail.size() < 2)
 		return;
 	shader.Activate();
+	shader.SetVec3("trailColor", body.trailSettings.color);
 	camera.Matrix(shader, "camMatrix");
 
+
+	size_t startIndex = 0;
+
+	if (body.trail.size() > body.trailSettings.displayedPoints)
+	{
+		startIndex = body.trail.size() - body.trailSettings.displayedPoints;
+	}
 	std::vector<glm::vec3> vertices;
-	vertices.reserve(body.trail.size());
+	vertices.reserve(body.trail.size()-startIndex);
+	for (size_t i = startIndex;i < body.trail.size();i++) {
+		glm::dvec3 point = body.trail[i];
+		point /= Constants::Rendering::DistanceScale;
 
-	for (const glm::dvec3& point : body.trail) {
-		glm::dvec3 renderPoint = point / Constants::Rendering::DistanceScale;
-
-		vertices.push_back(glm::vec3(renderPoint));
+		vertices.push_back(glm::vec3(point));
 	}
 	vbo.Update(vertices);
 

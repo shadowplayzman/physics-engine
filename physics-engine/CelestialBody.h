@@ -7,10 +7,23 @@
 #include"Transform.h"
 #include"Renderable.h"
 
+struct TrailSettings
+{
+	bool visible = true;
+
+	int maxStoredPoints = 5000;
+	int displayedPoints = 300;
+	double trailInterval = 3600.0;
+
+	glm::vec3 color = glm::vec3(1.0f);
+
+	float width = 1.0f;
+};
 class CelestialBody {
 public:
 	Transform transform ;
 	Renderable renderable;
+	TrailSettings trailSettings;
 
 	std::string Name;
 
@@ -22,9 +35,6 @@ public:
 
 	double visualScale = 1.0f;
 	double trailTimer = 0.0;
-
-	constexpr static double TrailInterval = 3600.0;
-
 
 	glm::dvec3 position;
 	glm::dvec3 velocity = glm::dvec3(0.0f);
@@ -38,6 +48,10 @@ public:
 	void AddForce(const glm::dvec3& force);
 
 	void Integrate(double dt);
+
+	void SetRadiusPercentage(double percentage, bool preserveDensity);
+	void SetMassPercentage(double percentage);
+	void SetVelocity(glm::dvec3 newVelocity);
 
 	void ClearForces();
 };

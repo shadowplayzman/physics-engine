@@ -1,4 +1,5 @@
 #include"shaderClass.h"
+#include<glm/glm.hpp>
 
 // Reads a text file and outputs a string with everything in the text file
 std::string get_file_contents(const char* filename)
@@ -103,4 +104,7 @@ void Shader::compileErrors(unsigned int object, const char* type)
 				<< std::endl;
 		}
 	}
+}
+void Shader::SetVec3(const char* uniform, const glm::vec3& value) {
+	glUniform3f(glGetUniformLocation(ID, uniform), value.x, value.y, value.z);
 }
