@@ -143,6 +143,7 @@ int main() {
 
 		ui.DrawSimulationWindow(simulationsettings, simulationState, universe, camera);
 		ui.DrawPlanetWindow(simulationsettings,simulationState,universe,camera);
+		ui.DrawPlanetSpawner(simulationsettings, universe);
 		//get and handle user inputs
 		bool tabPressed = glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS;
 

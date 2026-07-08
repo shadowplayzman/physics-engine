@@ -15,6 +15,8 @@ class SandBoxUI {
 			SimulationState& simualtionState,
 			Universe& universe,
 			Camera& camera);
+		void DrawPlanetSpawner(SimulationSettings& settings,
+			Universe& universe);
 
 };
 

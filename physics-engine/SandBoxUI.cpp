@@ -4,8 +4,10 @@
 #include"SimulationSettings.h"
 #include"SimulationState.h"
 #include"IMGUI/imgui.h"
+#include"PlanetSpawer.h"
 #include<algorithm>
 bool preserveDensity=true;
+PlanetSpawner spawner;
 
 static void DrawSimulationTime(double seconds) {
     const int SecondsPerMinute = 60;
@@ -162,4 +164,31 @@ void SandBoxUI::DrawPlanetWindow(SimulationSettings& settings, SimulationState& 
 
     ImGui::End();
 
+}
+void SandBoxUI::DrawPlanetSpawner(SimulationSettings& settings, Universe& universe) {
+    ImGui::Begin("Planet Spawner");
+
+    char nameBuffer[64];
+    strcpy_s(nameBuffer, spawner.name.c_str());
+
+    if (ImGui::InputText("Name", nameBuffer, sizeof(nameBuffer))) {
+        spawner.name = nameBuffer;
+
+
+    }
+        ImGui::InputDouble("Radius(m)", &spawner.radius);
+        ImGui::InputDouble("Mass (Kg)", &spawner.mass);
+        ImGui::Separator();
+        ImGui::Text("Position");
+        ImGui::InputDouble("Position X", &spawner.position.x);
+        ImGui::InputDouble("Position Y", &spawner.position.y);
+        ImGui::InputDouble("Position Z", &spawner.position.z);
+        ImGui::Separator();
+        ImGui::Text("Velocity");
+        ImGui::InputDouble("Velocity X", &spawner.velocity.x);
+        ImGui::InputDouble("Velocity Y", &spawner.velocity.y);
+        ImGui::InputDouble("Velocity Z", &spawner.velocity.z);
+
+
+    ImGui::End();
 }

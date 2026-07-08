@@ -175,6 +175,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="PhysicsWorld.cpp" />
+    <ClCompile Include="PlanetSpawner.cpp" />
     <ClCompile Include="PrimitiveMeshFactory.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="RigidBody.cpp" />
@@ -225,6 +226,7 @@
     </ClInclude>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="PhysicsWorld.h" />
+    <ClInclude Include="PlanetSpawer.h" />
     <ClInclude Include="PrimitiveMeshFactory.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RigidBody.h" />

@@ -165,6 +165,9 @@
     <ClCompile Include="SolarSystemFactory.cpp">
       <Filter>Source Files\bodies</Filter>
     </ClCompile>
+    <ClCompile Include="PlanetSpawner.cpp">
+      <Filter>Source Files\bodies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -290,6 +293,9 @@
       <Filter>Header Files\physics</Filter>
     </ClInclude>
     <ClInclude Include="SolarSystemFactory.h">
+      <Filter>Header Files\bodies</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetSpawer.h">
       <Filter>Header Files\bodies</Filter>
     </ClInclude>
   </ItemGroup>
