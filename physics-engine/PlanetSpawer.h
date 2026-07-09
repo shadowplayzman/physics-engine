@@ -4,6 +4,9 @@
 #include<string>
 #include<glm/glm.hpp>
 
+class Universe;
+class Mesh;
+
 struct PlanetSpawner
 {
 	enum class Template {
@@ -33,6 +36,7 @@ struct PlanetSpawner
 	bool preserveDensity = true;
 
 	void loadTemplate();
+	void Spawn(Universe& universe, Mesh& sphereMesh);
 };
 
 #endif // !PLANET_SPAWNER_H

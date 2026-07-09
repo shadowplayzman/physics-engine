@@ -2,6 +2,7 @@
 #include"CelestialBody.h"
 #include"Constants.h"
 #include"SimulationSettings.h"
+#include"mesh.h"
 #include"SimulationState.h"
 #include"IMGUI/imgui.h"
 #include"PlanetSpawer.h"
@@ -165,19 +166,37 @@ void SandBoxUI::DrawPlanetWindow(SimulationSettings& settings, SimulationState& 
     ImGui::End();
 
 }
-void SandBoxUI::DrawPlanetSpawner(SimulationSettings& settings, Universe& universe) {
+void SandBoxUI::DrawPlanetSpawner(SimulationSettings& settings,SimulationState& state,Universe& universe,Camera& camera,Mesh& sphereMesh) {
     ImGui::Begin("Planet Spawner");
+    const char* templates[] = {
+        "Custom",
+        "Mercury",
+        "Venus",
+        "Earth",
+        "Mars",
+        "Jupiter",
+        "Saturn",
+        "Uranus",
+        "Neptune",
+        "Sun"
+    };
+
+    int currentTemplate = static_cast<int>(spawner.SelectedTemplate);
 
     char nameBuffer[64];
     strcpy_s(nameBuffer, spawner.name.c_str());
+    if (ImGui::Combo("Template", &currentTemplate, templates, IM_ARRAYSIZE(templates))) {
+        spawner.SelectedTemplate = static_cast<PlanetSpawner::Template>(currentTemplate);
+        spawner.loadTemplate();
+    }
 
     if (ImGui::InputText("Name", nameBuffer, sizeof(nameBuffer))) {
         spawner.name = nameBuffer;
 
 
     }
-        ImGui::InputDouble("Radius(m)", &spawner.radius);
-        ImGui::InputDouble("Mass (Kg)", &spawner.mass);
+        ImGui::InputDouble("Radius(m)", &spawner.radius,0.0,0.0,"%.3e");
+        ImGui::InputDouble("Mass (Kg)", &spawner.mass, 0.0, 0.0, "%.3e");
         ImGui::Separator();
         ImGui::Text("Position");
         ImGui::InputDouble("Position X", &spawner.position.x);
@@ -188,6 +207,10 @@ void SandBoxUI::DrawPlanetSpawner(SimulationSettings& settings, Universe& univer
         ImGui::InputDouble("Velocity X", &spawner.velocity.x);
         ImGui::InputDouble("Velocity Y", &spawner.velocity.y);
         ImGui::InputDouble("Velocity Z", &spawner.velocity.z);
+
+        if (ImGui::Button("Spawn Planet")) {
+            spawner.Spawn(universe, sphereMesh);
+        }
 
 
     ImGui::End();

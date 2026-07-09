@@ -4,6 +4,7 @@
 #include"SimulationSettings.h"
 #include"SimulationState.h"
 #include"Universe.h"
+#include"mesh.h"
 #include"Camera.h"
 class SandBoxUI {
 	public:
@@ -15,8 +16,12 @@ class SandBoxUI {
 			SimulationState& simualtionState,
 			Universe& universe,
 			Camera& camera);
-		void DrawPlanetSpawner(SimulationSettings& settings,
-			Universe& universe);
+		void DrawPlanetSpawner(
+			SimulationSettings& settings,
+			SimulationState& state,
+			Universe& universe,
+			Camera& camera,
+			Mesh& sphereMesh);
 
 };
 
