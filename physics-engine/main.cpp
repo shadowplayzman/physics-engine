@@ -186,7 +186,7 @@ int main() {
 
 		//geting each body from the universe and rendering it also rendering its trail
 		for (CelestialBody* body : universe.bodies) {
-			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius, body->visualScale);
+			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius);
 			trailRenderer.Draw(*body, trailShader, camera);
 		}
 		ImGui::Render();

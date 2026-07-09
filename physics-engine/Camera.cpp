@@ -1,6 +1,7 @@
 #include"Camera.h"
 #include"CelestialBody.h"
 #include"Constants.h"
+#include"Renderable.h"
 #include"IMGUI/imgui.h"
 #include"Universe.h"
 
@@ -45,7 +46,8 @@ void Camera::ProccessScroll(double offset) {
 void Camera::SetTarget(CelestialBody* body) {
 	targetBody = body;
 	TransitionTarget =glm::vec3(body->transform.position /Constants::Rendering::DistanceScale);
-	TransitionDistance = (body->radius / Constants::Rendering::RadiusScale) * body->visualScale * 8.0f;
+	double renderRadius = Renderable::CalculateRenderRadius(body->radius);
+	TransitionDistance = static_cast<float>(renderRadius * 8.0);
 	transitioning = true;
 
 }

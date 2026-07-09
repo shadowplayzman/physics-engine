@@ -14,7 +14,8 @@ class Renderable {
 		Material material;
 		Renderable();
 
-		void Draw(Shader& shader, Camera& camera,const Transform& transform,double radius,double visualScale);
+		void Draw(Shader& shader, Camera& camera,const Transform& transform,double radius);
+		static double CalculateRenderRadius(double radius);
 };
 
 
