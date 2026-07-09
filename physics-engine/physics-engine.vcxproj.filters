@@ -303,31 +303,31 @@
     <Image Include="gojo.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="earth.jpg">
+    <Image Include="earth.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="jupiter.jpg">
+    <Image Include="jupiter.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="mars.jpg">
+    <Image Include="mars.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="mercury.jpg">
+    <Image Include="mercury.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="neptune.jpg">
+    <Image Include="neptune.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="saturn.jpg">
+    <Image Include="saturn.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="sun.jpg">
+    <Image Include="sun.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="uranus.jpg">
+    <Image Include="uranus.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="venus.jpg">
+    <Image Include="venus.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>

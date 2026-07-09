@@ -20,7 +20,6 @@ const GLint width = 1920, height = 1080;
 Universe universe;
 SimulationState simulationState = SimulationState::Running;
 SimulationSettings simulationsettings;
-PlanetTextures textures;
 
 
 
@@ -110,6 +109,28 @@ int main() {
 	shaderProgram.Activate();
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+
+	Texture sunTexture("sun.png", "diffuse", 0);
+	Texture mercuryTexture("mercury.png", "diffuse", 0);
+	Texture venusTexture("venus.png", "diffuse", 0);
+	Texture earthTexture("earth.png", "diffuse", 0);
+	Texture marsTexture("mars.png", "diffuse", 0);
+	Texture jupiterTexture("jupiter.png", "diffuse", 0);
+	Texture saturnTexture("saturn.png", "diffuse", 0);
+	Texture uranusTexture("uranus.png", "diffuse", 0);
+	Texture neptuneTexture("neptune.png", "diffuse", 0);
+
+	PlanetTextures textures{
+	sunTexture,
+	mercuryTexture,
+	venusTexture,
+	earthTexture,
+	marsTexture,
+	jupiterTexture,
+	saturnTexture,
+	uranusTexture,
+	neptuneTexture
+	};
 
 	//enabled this to allow opengl to render objects with depth
 	glEnable(GL_DEPTH_TEST);

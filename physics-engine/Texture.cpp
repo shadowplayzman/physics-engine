@@ -6,6 +6,12 @@ Texture::Texture(const char* image, const char* textype, GLuint slot) {
 	int widthImg, heightImg, numColch;
 	//flips the image
 	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColch, 0);
+	if (!bytes)
+	{
+		std::cout << "Failed to load texture: " << image << std::endl;
+		std::cout << stbi_failure_reason() << std::endl;
+		throw std::runtime_error("Texture loading failed");
+	}
 
 	//generate and binding the texture to the variable
 	GLuint texture;

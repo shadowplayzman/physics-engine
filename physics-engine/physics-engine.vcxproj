@@ -243,16 +243,16 @@
     <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="earth.jpg" />
+    <Image Include="earth.png" />
     <Image Include="gojo.png" />
-    <Image Include="jupiter.jpg" />
-    <Image Include="mars.jpg" />
-    <Image Include="mercury.jpg" />
-    <Image Include="neptune.jpg" />
-    <Image Include="saturn.jpg" />
-    <Image Include="sun.jpg" />
-    <Image Include="uranus.jpg" />
-    <Image Include="venus.jpg" />
+    <Image Include="jupiter.png" />
+    <Image Include="mars.png" />
+    <Image Include="mercury.png" />
+    <Image Include="neptune.png" />
+    <Image Include="saturn.png" />
+    <Image Include="sun.png" />
+    <Image Include="uranus.png" />
+    <Image Include="venus.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
