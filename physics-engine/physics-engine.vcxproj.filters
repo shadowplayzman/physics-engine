@@ -303,5 +303,32 @@
     <Image Include="gojo.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+    <Image Include="earth.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="jupiter.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="mars.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="mercury.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="neptune.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="saturn.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="sun.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="uranus.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="venus.jpg">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

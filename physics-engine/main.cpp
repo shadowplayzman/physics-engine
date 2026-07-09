@@ -20,6 +20,7 @@ const GLint width = 1920, height = 1080;
 Universe universe;
 SimulationState simulationState = SimulationState::Running;
 SimulationSettings simulationsettings;
+PlanetTextures textures;
 
 
 
@@ -124,7 +125,7 @@ int main() {
 	Mesh sphereMesh = PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 
 	//calling the function to create the solar sytem
-	SolarSystemFactory::CreateSolarSystem(universe, sphereMesh);
+	SolarSystemFactory::CreateSolarSystem(universe, sphereMesh,textures);
 
 	size_t currentTargetIndex = 0;
 	bool tabWasPressed = false;
