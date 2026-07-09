@@ -59,6 +59,7 @@ void Skybox::Draw(Camera& camera)
 
 	// Draw the skybox behind everything else
 	glDepthFunc(GL_LEQUAL);
+	glDisable(GL_CULL_FACE);
 
 	// Remove camera translation so the skybox follows the camera
 	glm::mat4 view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
@@ -91,6 +92,7 @@ void Skybox::Draw(Camera& camera)
 
 	glBindVertexArray(0);
 
+	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 }
 

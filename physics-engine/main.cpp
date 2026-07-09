@@ -159,8 +159,8 @@ int main() {
 		"left.png",
 		"top.png",
 		"bottom.png",
-		"front.png",
-		"back.png"
+		"back.png",
+		"front.png"
 	};
 
 

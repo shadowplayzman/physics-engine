@@ -9,7 +9,13 @@
 Camera::Camera(int width, int height, glm::vec3 position) {
 	Camera::width = width;
 	Camera::height = height;
-	Position = position;
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+	direction.y = sin(glm::radians(Pitch));
+	direction.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+
+	Orientation = glm::normalize(direction);
+	Position = Target - Orientation * Distance;
 }
 
 CelestialBody* Camera::GetTargetBody() const {

@@ -34,8 +34,8 @@ public:
 	float Distance = 150.0f;
 	float TransitionDistance = 150.0f;
 
-	float Yaw = -90.0f;
-	float Pitch = 0.0f;
+	float Yaw = -45.0f;
+	float Pitch = -20.0f;
 
 	bool transitioning = false;
 
