@@ -67,6 +67,8 @@ void Mesh::Draw(Shader& shader,
 		material.specularColor.z);
 
 	glUniform1f(glGetUniformLocation(shader.ID, "materialShininess"), material.shininess);
+	glUniform1f(glGetUniformLocation(shader.ID, "materialEmissive"), material.emissive);
+	glUniform1f(glGetUniformLocation(shader.ID, "materialEmissionStrength"), material.emissionStrength);
 
 	glUniform3f(glGetUniformLocation(shader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 	camera.Matrix(shader, "camMatrix");

@@ -182,6 +182,7 @@
     <ClCompile Include="SandBoxUI.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="SimulationSettings.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SolarSystemFactory.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -196,6 +197,8 @@
     <None Include="default.vert" />
     <None Include="light.frag" />
     <None Include="light.vert" />
+    <None Include="skybox.frag" />
+    <None Include="skybox.vert" />
     <None Include="trail.frag" />
     <None Include="trail.vert" />
   </ItemGroup>
@@ -234,6 +237,7 @@
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="SimulationSettings.h" />
     <ClInclude Include="SimulationState.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SolarSystemFactory.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TrailRenderer.h" />
@@ -243,6 +247,12 @@
     <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\back.png" />
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\bottom.png" />
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\front.png" />
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\left.png" />
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\right.png" />
+    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\top.png" />
     <Image Include="earth.png" />
     <Image Include="gojo.png" />
     <Image Include="jupiter.png" />

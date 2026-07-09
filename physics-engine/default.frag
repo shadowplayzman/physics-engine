@@ -23,6 +23,8 @@ uniform vec4 lightColor;
 uniform vec3 lightPos;
 // Gets the position of the camera from the main function
 uniform vec3 camPos;
+uniform bool materialEmissive;
+uniform float materialEmissionStrength;
 
 uniform sampler2D specular0;
 
@@ -156,5 +158,19 @@ vec4 spotLight(){
 	return (diffuseColor * (diffuse * inten + ambient) + specMap * specular * inten) * lightColor;}
 void main()
 {
-FragColor = direcLight();
+if(materialEmissive)
+{
+    vec4 diffuseColor;
+
+    if(hasDiffuseTexture)
+        diffuseColor = texture(diffuse0, texCoord);
+    else
+        diffuseColor = vec4(materialDiffuseColor,1.0);
+
+    FragColor = diffuseColor * materialEmissionStrength;
+}
+else
+{
+    FragColor = direcLight();
+}
    }

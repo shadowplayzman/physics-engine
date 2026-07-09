@@ -13,6 +13,8 @@ void SolarSystemFactory::CreateSun(Universe& universe, Mesh& sphereMesh, Texture
 	sun->radius = Constants::Sun::Radius;
 	sun->originalMass = sun->mass;
 	sun->originalRadius = sun->radius;
+	sun->renderable.material.emissive = true;
+	sun->renderable.material.emissionStrength = 2.0f;
 	sun->Name = "Sun";
 	universe.AddBody(sun);
 }

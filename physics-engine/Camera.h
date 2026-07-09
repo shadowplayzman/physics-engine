@@ -21,6 +21,8 @@ public:
 	glm::mat4 camMatrix = glm::mat4(1.0f);
 	glm::vec3 Target = glm::vec3(0.0f);
 	glm::vec3 TransitionTarget = glm::vec3(0.0f);
+	glm::mat4 GetViewMatrix() const;
+	glm::mat4 GetProjectionMatrix() const;
 
 	int width;
 	int height;

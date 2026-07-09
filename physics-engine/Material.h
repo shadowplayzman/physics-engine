@@ -16,6 +16,9 @@ class Material {
 		Texture* diffuseTexture = nullptr;
 		Texture* specularTexture = nullptr;
 
+		bool  emissive = false;
+		float emissionStrength = 1.0f;
+
 		Material();
 };
 

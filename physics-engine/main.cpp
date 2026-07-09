@@ -10,6 +10,7 @@
 #include"SimulationState.h"
 #include"SandBoxUI.h"
 #include"SimulationSettings.h"
+#include"SkyBox.h"
 #include "imgui.h"
 #include"backends/imgui_impl_glfw.h"
 #include"backends/imgui_impl_opengl3.h"
@@ -153,6 +154,17 @@ int main() {
 
 	//allows to orbit the camera around an object in the universe class
 	camera.SetTarget(universe.GetBody(currentTargetIndex));
+	std::vector<std::string> skyboxFaces = {
+		"right.png",
+		"left.png",
+		"top.png",
+		"bottom.png",
+		"front.png",
+		"back.png"
+	};
+
+
+	Skybox skybox(skyboxFaces);
 
 	double lastFrame = glfwGetTime();
 	//main loop
@@ -186,6 +198,7 @@ int main() {
 		//clear buffer
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		skybox.Draw(camera);
 
 		//updating the universe to all ohysics
 		camera.Inputs(window);

@@ -16,6 +16,13 @@ CelestialBody* Camera::GetTargetBody() const {
 	return targetBody;
 }
 
+glm::mat4 Camera::GetViewMatrix()const {
+	return glm::lookAt(Position, Target, Up);
+}
+glm::mat4 Camera::GetProjectionMatrix() const {
+	return glm::perspective(glm::radians(90.0f), (float)width / (float)height, 0.1f, 100000.0f);
+}
+
 //updates the matrix 
 void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
 	glm::mat4 view = glm::mat4(1.0f);
