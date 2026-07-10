@@ -10,6 +10,7 @@ class PrimitiveMeshFactory {
 		static Mesh CreatePlane(float width, float depth);
 		static Mesh CreateCylinder(float radius, float height, int sectors);
 		static Mesh CreateCapsule(float radius, float height, int sectors, int stacks);
+		static Mesh CreateRing(float innerRadius,float outerRadius,int segments);
 };
 
 #endif // !PRIMITIVE_MESH_FACTORY_H

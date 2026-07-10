@@ -24,6 +24,7 @@ SimulationSettings simulationsettings;
 
 
 
+
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
 	camera->ProccessScroll(yoffset);
@@ -105,6 +106,9 @@ int main() {
 	glm::mat4 lightmodel = glm::mat4(1.0f);
 	lightmodel = glm::translate(lightmodel, lightPos);
 
+	//creating a mesh to render all the the spheres
+	Mesh sphereMesh = PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
+	Mesh saturnRingMesh = PrimitiveMeshFactory::CreateRing(1.25f, 2.35f, 128);
 
 	//getiing the location of the uniforms for light pos and colour
 	shaderProgram.Activate();
@@ -133,6 +137,17 @@ int main() {
 	neptuneTexture
 	};
 
+	Material saturnRingMaterial;
+
+	Texture saturnRingTexture("saturnRing.png", "diffuse", 0);
+
+	saturnRingMaterial.diffuseTexture = &saturnRingTexture;
+
+	saturnRingMaterial.diffusecolor = glm::vec3(0.83f, 0.80f, 0.68f);
+	saturnRingMaterial.specularColor = glm::vec3(0.1f);
+	saturnRingMaterial.shininess = 4.0f;
+
+
 	//enabled this to allow opengl to render objects with depth
 	glEnable(GL_DEPTH_TEST);
 
@@ -143,8 +158,6 @@ int main() {
 
 	SandBoxUI ui;
 
-	//creating a mesh to render all the the spheres
-	Mesh sphereMesh = PrimitiveMeshFactory::CreateSphere(1.0f, 32, 32);
 
 	//calling the function to create the solar sytem
 	SolarSystemFactory::CreateSolarSystem(universe, sphereMesh,textures);
@@ -157,8 +170,8 @@ int main() {
 	std::vector<std::string> skyboxFaces = {
 		"right.png",
 		"left.png",
-		"top.png",
 		"bottom.png",
+		"top.png",
 		"back.png",
 		"front.png"
 	};
@@ -223,6 +236,27 @@ int main() {
 		for (CelestialBody* body : universe.bodies) {
 			body->renderable.Draw(shaderProgram, camera, body->transform, body->radius);
 			trailRenderer.Draw(*body, trailShader, camera);
+
+			if (body->Name == "Saturn") {
+				//draw saturn ring Here
+				double renderRadius = Renderable::CalculateRenderRadius(body->radius);
+
+				Transform ringTransform;
+				glm::quat tilt = glm::angleAxis(glm::radians(26.7f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+				ringTransform.position = body->transform.position/Constants::Rendering::DistanceScale;
+				ringTransform.rotation = body->transform.rotation*tilt;
+				ringTransform.scale = glm::vec3(renderRadius*2.2f);
+
+				saturnRingMesh.Draw(
+					shaderProgram,
+					camera,
+					ringTransform.GetMatrix(),
+					ringTransform.position,
+					ringTransform.rotation,
+					ringTransform.scale,
+					saturnRingMaterial);
+			}
 		}
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

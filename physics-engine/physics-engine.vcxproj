@@ -260,6 +260,7 @@
     <Image Include="mercury.png" />
     <Image Include="neptune.png" />
     <Image Include="saturn.png" />
+    <Image Include="saturnRing.png" />
     <Image Include="sun.png" />
     <Image Include="uranus.png" />
     <Image Include="venus.png" />
