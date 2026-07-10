@@ -85,7 +85,7 @@ Interactive ImGui interface including:
 ## Saturn Rings
 
 <p align="center">
-<img src="Images/Saturn.png" width="700">
+<img src="Images/saturn.png" width="700">
 </p>
 
 ---
