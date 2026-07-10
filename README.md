@@ -11,7 +11,7 @@ The project began as a simple renderer and has evolved into an interactive sandb
 > Add your best screenshot here.
 
 ```md
-![Solar System](images/Overview.png)
+![Solar System](Images/Overview.png)
 ```
 
 ---
@@ -145,13 +145,13 @@ The simulation can also be controlled through the ImGui interface.
 # Gallery
 
 ```
-images/
+Images/
 
-overview.png
-earth.png
-saturn.png
-planet_spawner.png
-planet_inspector.png
+Overview.png
+Earth.png
+Saturn.png
+Planet_spawner.png
+Planet_Inspector.png
 Simulation.png
 ```
 
