@@ -208,6 +208,12 @@ void SandBoxUI::DrawPlanetSpawner(SimulationSettings& settings,SimulationState& 
         ImGui::InputDouble("Velocity Y", &spawner.velocity.y);
         ImGui::InputDouble("Velocity Z", &spawner.velocity.z);
 
+        ImGui::Separator();
+        ImGui::Text("Appearance");
+
+        ImGui::ColorEdit3("Planet Color", &spawner.planetColor.x);
+        ImGui::ColorEdit3("Trail Color", &spawner.trailColor.x);
+
         if (ImGui::Button("Spawn Planet")) {
             spawner.Spawn(universe, sphereMesh);
         }

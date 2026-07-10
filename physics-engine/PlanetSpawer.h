@@ -32,6 +32,7 @@ struct PlanetSpawner
 	glm::dvec3 velocity = glm::dvec3(0.0);
 
 	glm::vec3 trailColor = glm::vec3(1.0f);
+	glm::vec3 planetColor = glm::vec3(1.0f);
 
 	bool preserveDensity = true;
 

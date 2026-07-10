@@ -13,6 +13,8 @@ class Universe {
 
 		void AddBody(CelestialBody* body);
 
+		void Clear();
+
 		void Update(double dt);
 };
 

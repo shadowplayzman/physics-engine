@@ -230,6 +230,17 @@ int main() {
 		//allows to control camera
 		//defining the fov,near angle and far angle fot the camera
 		camera.updateMatrix(90.0f, 0.1f, 100000.0f);
+		if (simulationsettings.ResetRequested) {
+			universe.Clear();
+
+			SolarSystemFactory::CreateSolarSystem(universe, sphereMesh, textures);
+
+			currentTargetIndex = 0;
+			camera.SetTarget(universe.GetBody(0));
+
+			simulationsettings.SimulationTime = 0.0;
+			simulationsettings.ResetRequested = false;
+		}
 		shaderProgram.Activate();
 
 		//geting each body from the universe and rendering it also rendering its trail

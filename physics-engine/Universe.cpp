@@ -20,6 +20,13 @@ void Universe::Update(double dt) {
 	}
 }
 
+void Universe::Clear() {
+	for (CelestialBody* body : bodies)
+		delete body;
+
+	bodies.clear();
+}
+
 CelestialBody* Universe::GetBody(size_t index) {
 	return bodies[index];
 }

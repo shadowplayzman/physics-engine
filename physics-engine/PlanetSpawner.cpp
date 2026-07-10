@@ -13,6 +13,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(0.0, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, 0.0, 0.0);
 		trailColor = glm::vec3(1.00f, 0.85f, 0.20f);
+		planetColor = glm::vec3(1.00f, 0.85f, 0.20f);
 
 		preserveDensity = true;
 
@@ -25,6 +26,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Mercury::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Mercury::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.65f, 0.65f, 0.65f);
+		planetColor = glm::vec3(0.65f, 0.65f, 0.65f);
 
 		preserveDensity = true;
 
@@ -37,6 +39,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Venus::Distance,0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Venus::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.95f, 0.82f, 0.45f);
+		planetColor = glm::vec3(0.95f, 0.82f, 0.45f);
 
 		preserveDensity = true;
 
@@ -49,6 +52,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Earth::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Earth::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.20f, 0.5f, 1.00f);
+		planetColor = glm::vec3(0.20f, 0.5f, 1.00f);
 
 		preserveDensity = true;
 
@@ -61,6 +65,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Mars::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Mars::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.85f, 0.25f, 0.20f);
+		planetColor = glm::vec3(0.85f, 0.25f, 0.20f);
 
 		preserveDensity = true;
 
@@ -73,6 +78,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Jupiter::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Jupiter::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.85f, 0.60f, 0.35f);
+		planetColor = glm::vec3(0.85f, 0.60f, 0.35f);
 
 		preserveDensity = true;
 
@@ -85,6 +91,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Saturn::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Saturn::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.90f, 0.80f, 0.50f);
+		planetColor = glm::vec3(0.90f, 0.80f, 0.50f);
 
 		preserveDensity = true;
 
@@ -97,6 +104,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Uranus::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Uranus::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.45f, 0.90f, 1.00f);
+		planetColor = glm::vec3(0.45f, 0.90f, 1.00f);
 
 		preserveDensity = true;
 
@@ -109,6 +117,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(Constants::Neptune::Distance, 0.0, 0.0);
 		velocity = glm::dvec3(0.0, Constants::Neptune::OrbitalSpeed, 0.0);
 		trailColor = glm::vec3(0.20f, 0.35f, 1.00f);
+		planetColor = glm::vec3(0.20f, 0.35f, 1.00f);
 
 		preserveDensity = true;
 
@@ -121,6 +130,7 @@ void PlanetSpawner::loadTemplate() {
 		position = glm::dvec3(0.0, 0.0, 0.0);
 		velocity = glm::dvec3(0.0,0.0, 0.0);
 		trailColor = glm::vec3(0.20f, 0.35f, 1.00f);
+		planetColor = glm::vec3(0.20f, 0.35f, 1.00f);
 
 		preserveDensity = true;
 
@@ -147,6 +157,10 @@ void PlanetSpawner::Spawn(Universe& universe, Mesh& sphereMesh) {
 	body->trailSettings.color = trailColor;
 
 	body->renderable.mesh = &sphereMesh;
+
+	body->renderable.material.diffusecolor = planetColor;
+
+	body->trailSettings.color = trailColor;
 
 	universe.AddBody(body);
 }
