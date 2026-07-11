@@ -1,158 +1,77 @@
-# 3D Physics Engine
+# 3D Solar System Simulation
+## A 3D Solar System simulator built from scratch in C++ using OpenGL.
 
-A real-time **3D Newtonian gravity simulator and physics sandbox** built completely from scratch in **C++** using **OpenGL**.
+This project was built to learn how physics engines and rendering engines work internally. Instead of using an existing game engine or physics library, I wanted to implement everything myself and understand how the different systems fit together.
 
-This project focuses on learning engine architecture, rendering, mathematics, and physics rather than relying on existing game engines or physics libraries.
+The project currently simulates the Solar System using Newtonian gravity and includes a sandbox where planets can be edited or spawned while the simulation is running.
 
----
+Some of the things this project currently includes:
 
-# Features
-
-## Rendering
-
-- Real-time 3D rendering using OpenGL
+- Real-time Newtonian gravity simulation
 - Textured planets
-- Skybox rendering
-- Dynamic camera system
-- Saturn ring rendering
-- Planet trail rendering
-- Adjustable trail length
-- Custom trail colors
-- Runtime planet colors
-
----
-
-## Physics
-
-- Newtonian gravitational simulation
-- N-body gravity
-- Semi-implicit Euler integration
-- Time scaling
-- Pause / Resume simulation
-- Solar system reset
-- Runtime planet spawning
-- Orbit visualization
-
----
-
-## Sandbox
-
-Interactive ImGui interface including:
-
-- Simulation controls
+- Saturn rings
+- Skybox
+- Orbit camera
+- Planet spawning
 - Planet inspector
-- Planet spawner
-- Camera target switching
-- Planet radius editing
-- Automatic mass preservation when resizing planets
-- Velocity editing
-- Position editing
-- Trail customization
-- Planet color picker
-- Trail color picker
+- Time controls
+- Pause and resume simulation
+- Planet and trail color customization
+- Orbit trail rendering
+- Standalone executable
+
+## Demo
+
+You can watch a short demonstration of the project here:
+
+**Video:** *(https://www.youtube.com/watch?v=hP4zgpyufLg)*
 
 ---
 
-# Controls
+## Screenshots
 
-| Key | Action |
-|------|--------|
-| W A S D | Move Camera |
-| Mouse | Rotate Camera |
-| Mouse Wheel | Zoom |
-| TAB | Cycle Target Planet |
+### Solar System
 
----
+![Overview](Images/Overview.png)
 
-# Screenshots
+### Earth
 
-## Solar System Overview
+![Earth](Images/Earth.png)
 
-<p align="center">
-<img src="Images/Overview.png" width="900">
-</p>
+### Saturn
 
----
+![Saturn](Images/saturn.png)
 
-## Earth
+### Planet Inspector
 
-<p align="center">
-<img src="Images/Earth.png" width="700">
-</p>
+![Inspector](Images/Planet_Inspector.png)
 
----
+### Planet Spawner
 
-## Saturn Rings
+![Spawner](Images/Planet_spawner.png)
 
-<p align="center">
-<img src="Images/saturn.png" width="700">
-</p>
+### Simulation Controls
+
+![Controls](Images/Simulation.png)
 
 ---
 
-## Planet Inspector
+## Controls
 
-<p align="center">
-<img src="Images/Planet_Inspector.png" width="350">
-</p>
+- Left Mouse Button - Rotate camera
+- Mouse Wheel - Zoom
+- TAB - Switch between planets
 
----
-
-## Simulation Controls
-
-<p align="center">
-<img src="Images/Simulation.png" width="350">
-</p>
+Most simulation controls are available through the ImGui interface.
 
 ---
 
-## Planet Spawner
+## Technologies Used
 
-<p align="center">
-<img src="Images/Planet_spawner.png" width="350">
-</p>
-
----
-
-# Project Structure
-
-```
-Physics Engine
-│
-├── Rendering
-│   ├── Mesh
-│   ├── Texture
-│   ├── Shader
-│   ├── Camera
-│   ├── Skybox
-│   ├── TrailRenderer
-│   └── PrimitiveMeshFactory
-│
-├── Physics
-│   ├── Universe
-│   ├── CelestialBody
-│   ├── Gravity
-│   ├── Transform
-│   └── Integration
-│
-├── Sandbox
-│   ├── Planet Inspector
-│   ├── Planet Spawner
-│   ├── Simulation Window
-│   └── Camera Controls
-│
-└── Assets
-    ├── Planet Textures
-    ├── Skybox
-    └── Saturn Ring Texture
-```
-
----
-
-# Technologies
+This project uses:
 
 - C++
-- OpenGL 3.3
+- OpenGL
 - GLFW
 - GLEW
 - GLM
@@ -161,56 +80,26 @@ Physics Engine
 
 ---
 
-# Current Progress
+## Known Issues
 
-- ✅ Modular rendering architecture
-- ✅ Newtonian gravity simulation
-- ✅ Solar system generation
-- ✅ Camera system
-- ✅ Planet textures
-- ✅ Skybox
-- ✅ Saturn rings
-- ✅ Trail rendering
-- ✅ Planet spawning
-- ✅ Runtime editing
-- ✅ Planet & trail color customization
-- ✅ Reset simulation
+- The application is currently designed for **1920×1080** and has not been adapted for different window sizes or resolutions.
+- UI scaling and rendering may not appear correctly at other resolutions.
+- I know the saturn rings look terrible, but i tried my best to fix them 
 
 ---
 
-# Planned Features
+## Why I Built This
 
-## Physics
-
-- Collision detection
-- Collision response
-- Rigid body dynamics
-- Barnes-Hut gravity optimization
-- Better numerical integrators (RK4 / Verlet)
-- Multithreaded simulation
-
-## Rendering
-
-- Proper transparent Saturn rings
-- Shadow mapping
-- Bloom
-- HDR rendering
-- Atmospheres
-- Planetary clouds
-- Better skybox
-- Asteroid belts
-
-## Sandbox
-
-- Save / Load simulations
-- Camera bookmarks
-- Simulation recording
-- Object deletion
-- Gizmos
-- Statistics window
+I started this project because I wanted to understand how a physics engine works instead of treating it like a black box. The goal is to gradually build a complete physics engine while learning more about graphics programming, mathematics, and simulation along the way.
 
 ---
 
-# Goal
+## Found a Bug?
 
-The long-term goal of this project is to build a complete 3D physics engine capable of simulating realistic planetary systems, orbital mechanics, and eventually more advanced physics such as rigid body dynamics, collisions, and large-scale astrophysical simulations.
+If you find a bug or have a suggestion, feel free to open an issue. Pull requests are also welcome.
+
+---
+
+## Project Status
+
+This is the first public version of the project and I'll continue improving it over time.
