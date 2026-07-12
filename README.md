@@ -1,8 +1,8 @@
 # Physics Engine — 3D Solar System Simulator
  
-a 3D solar system sim built from scratch in C++ and OpenGL. no game engine, no physics library, i wanted to actually understand how this stuff works instead of just calling a function and trusting it.
+a 3D solar system sim built from scratch in C++ and OpenGL. no game engine, no physics library, i wanted to actually understand how this stuff works.
  
-everything uses real SI units for the physics, and gravity is full n-body, meaning every planet actually pulls on every other planet, not just the sun pulling on planets while they ignore each other. the spheres themselves are procedurally generated too, drawn by looping vertices along latitude and longitude lines instead of loading premade planet meshes.
+everything uses real SI units for the physics, and gravity is full n-body, meaning every planet actually pulls on every other planet. the spheres themselves are procedurally generated too, drawn by looping vertices along latitude and longitude lines.
  
 ## demo
  
@@ -84,7 +84,7 @@ most of the actual simulation control happens through the imgui windows, not key
 - saturn's rings look pretty rough, tried to fix them and this is what i landed on for now
 ## why i built this
  
-mainly wanted to stop treating physics/rendering engines like a black box. learning the OpenGL side (matrices, model matrices, translation matrices, all of it) was probably the hardest part of the whole project. this is v1, planning to keep building on it.
+mainly wanted to learn C++ libraries ike opengl,dearImgui. learning the OpenGL side (matrices, model matrices, translation matrices, all of it) was probably the hardest part of the whole project. this is v1, planning to keep building on it in the future.
  
 ## found a bug?
  
