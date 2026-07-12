@@ -1,6 +1,6 @@
 # Physics Engine — 3D Solar System Simulator
  
-a 3D solar system sim built from scratch in C++ and OpenGL. no game engine, no physics library, i wanted to actually understand how this stuff works.
+a 3D solar system sim built from scratch in C++ and OpenGL. no game engine, no physics library.
  
 everything uses real SI units for the physics, and gravity is full n-body, meaning every planet actually pulls on every other planet. the spheres themselves are procedurally generated too, drawn by looping vertices along latitude and longitude lines.
  
