@@ -104,7 +104,7 @@ void SandBoxUI::DrawPlanetWindow(SimulationSettings& settings, SimulationState& 
         ImGui::Checkbox("Preserve Density", &preserveDensity);
         ImGui::SameLine();
         ImGui::TextDisabled("(?)");
-        if (ImGui::IsAnyItemHovered()) {
+        if (ImGui::IsItemHovered()) {
             ImGui::SetTooltip("When enabled, changing the radius automatically\n"
                 "updates the mass to keep density constant.");
         }

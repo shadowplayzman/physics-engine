@@ -66,14 +66,14 @@ Mesh PrimitiveMeshFactory::CreateRing(float innerRadius, float outerRadius, int 
 
 		inner.normal = glm::vec3(0.0f, 1.0f, 0.0f);
 		inner.color = glm::vec3(1.0f);
-		inner.texUV = glm::vec2((float)i / segments, 0.0f);
+		inner.texUV = glm::vec2(0.0f, (float)i / segments);
 
 		Vertex outer;
 		outer.position = glm::vec3(outerRadius * c, 0.0f, outerRadius * s);
 
 		outer.normal = glm::vec3(0.0f, 1.0f, 0.0f);
 		outer.color = glm::vec3(1.0f);
-		outer.texUV = glm::vec2((float)i / segments, 1.0f);
+		outer.texUV = glm::vec2(1.0f, (float)i / segments);
 
 		vertices.push_back(inner);
 		vertices.push_back(outer);

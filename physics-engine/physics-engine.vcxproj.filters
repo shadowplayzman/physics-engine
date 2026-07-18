@@ -64,9 +64,6 @@
     <Filter Include="Source Files\Simulation">
       <UniqueIdentifier>{9572feb5-aa3a-4c41-805c-a0895dc9661f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\skybox">
-      <UniqueIdentifier>{70e06156-c0d0-41fb-b4ae-9fa82b86f2a1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -171,7 +168,7 @@
     <ClCompile Include="PlanetSpawner.cpp">
       <Filter>Source Files\bodies</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp">
+    <ClCompile Include="SkySphere.cpp">
       <Filter>Source Files\visuals</Filter>
     </ClCompile>
   </ItemGroup>
@@ -194,10 +191,10 @@
     <None Include="trail.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="skybox.vert">
+    <None Include="skysphere.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="skybox.frag">
+    <None Include="skysphere.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -310,7 +307,7 @@
     <ClInclude Include="PlanetSpawer.h">
       <Filter>Header Files\bodies</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h">
+    <ClInclude Include="SkySphere.h">
       <Filter>Header Files\visuals</Filter>
     </ClInclude>
   </ItemGroup>
@@ -345,25 +342,10 @@
     <Image Include="venus.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\back.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\bottom.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\front.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\left.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\right.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
-    <Image Include="..\..\..\..\Downloads\Space Skybox Pack 0.1\Space Skybox Pack\nebula\top.png">
-      <Filter>Resource Files\skybox</Filter>
-    </Image>
     <Image Include="saturnRing.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="stars.jpg">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>
