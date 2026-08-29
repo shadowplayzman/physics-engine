@@ -18,8 +18,12 @@ There's two ways to get this running:
  
 1. Grab the latest release from the [Releases page](https://github.com/shadowplayzman/physics-engine/releases)
 2. Unzip it
-3. Run `physics-engine.exe`
-That's it, no separate install needed, glew32.dll and glfw3.dll are already bundled with the release along with the textures and shaders.
+3. If Windows says `VCRUNTIME140.dll` is missing, run `vc_redist.x86.exe` included in the release
+4. Run `physics-engine.exe`
+ 
+glew32.dll and glfw3.dll are already bundled with the release along with the textures and shaders.
+ 
+The current release is built for Windows x86 and requires an OpenGL 3.3 compatible system.
  
 **Option 2 — build it yourself from source**
  
@@ -29,7 +33,7 @@ That's it, no separate install needed, glew32.dll and glfw3.dll are already bund
 ```
 2. Open `physics-engine.slnx` in Visual Studio (2022 or newer)
 3. Dependencies (GLFW, GLEW, GLM, Dear ImGui, stb_image) are already vendored in the `external` folder, so there's nothing extra to download
-4. Set the build config to `Release` and `x64`
+4. Set the build config to `Release` and `X86`
 5. Build and run — the exe will land in the output folder alongside the required dlls
 windows only for now, since it's built and tested on 1920x1080 windows (see known issues below).
  
@@ -81,7 +85,7 @@ Most of the actual simulation control happens through the imgui windows, not key
 ## Known issues
  
 - Built for 1920x1080, hasn't been adapted for other resolutions/window sizes yet, so UI scaling might look off elsewhere
-- Saturn's rings look pretty rough, tried to fix them and this is what i landed on for now
+- The current release is built for Windows x86
 ## Why I built this
  
 Mainly wanted to learn C++ libraries ike opengl,dearImgui. Learning the OpenGL side (matrices, model matrices, translation matrices, all of it) was probably the hardest part of the whole project. this is v1, planning to keep building on it in the future.
