@@ -12,16 +12,12 @@ Everything uses real SI units for the physics, and gravity is full n-body, meani
  
 ## Installation
  
-There's two ways to get this running:
+**Option 1 — just install from the releases**
  
-**Option 1 — just run the prebuilt version (easiest)**
- 
-1. Install the latest release from the [Releases page](https://github.com/shadowplayzman/physics-engine/releases)
-2. Unzip it
-3. If Windows says `VCRUNTIME140.dll` is missing, run `vc_redist.x86.exe` included in the release zip folder
-4. Run `physics-engine.exe`
- 
-glew32.dll and glfw3.dll are already bundled with the release along with the textures and shaders.
+1. Install the newest release from [Releases page](https://github.com/shadowplayzman/physics-engine/releases)
+2. Unzip the downloaded folder.
+3. Run `physics-engine.exe`
+4.If you see an error saying `VCRUNTIME140.dll` is missing run `vc_redist.x86.exe` from the zip file to install the Microsoft Visual C++ Redistributable
  
 The current release is built for Windows x86 and requires an OpenGL 3.3 compatible system.
  
@@ -32,9 +28,9 @@ The current release is built for Windows x86 and requires an OpenGL 3.3 compatib
    git clone https://github.com/shadowplayzman/physics-engine.git
 ```
 2. Open `physics-engine.slnx` in Visual Studio (2022 or newer)
-3. Dependencies (GLFW, GLEW, GLM, Dear ImGui, stb_image) are already in the `external` folder,
+3. All required libraries (GLFW, GLEW, GLM, Dear ImGui, stb_image) are already in the `folder
 4. Set the build config to `Release` and `X86`
-5. Build and run — the exe will land in the output folder alongside the required dlls
+5. Compile and run the program
  
 ## Features
  
@@ -91,7 +87,3 @@ Mainly wanted to learn C++ libraries ike opengl,dearImgui. Learning the OpenGL s
 
 #Future Plans 
 I have decided to make different types of sandboxes on top of existing solar system sim. For example gravity sim, Projectile motion sim you can select the planet then the select the sandbox and see how gravity or the projectile motion will work on that planet 
- 
-## Found a bug?
- 
-open an issue, or send a pull request if you want to fix it yourself.
