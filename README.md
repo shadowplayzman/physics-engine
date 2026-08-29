@@ -1,6 +1,6 @@
 # Physics Engine — 3D Solar System Simulator
  
-A 3D solar system sim built from scratch in C++ and OpenGL. No game engine, no physics library.
+A 3D solar system sim built from scratch in C++ and OpenGL.
  
 Everything uses real SI units for the physics, and gravity is full n-body, meaning every planet actually pulls on every other planet. The spheres themselves are procedurally generated too, drawn by looping vertices along latitude and longitude lines.
  
@@ -16,9 +16,9 @@ There's two ways to get this running:
  
 **Option 1 — just run the prebuilt version (easiest)**
  
-1. Grab the latest release from the [Releases page](https://github.com/shadowplayzman/physics-engine/releases)
+1. Install the latest release from the [Releases page](https://github.com/shadowplayzman/physics-engine/releases)
 2. Unzip it
-3. If Windows says `VCRUNTIME140.dll` is missing, run `vc_redist.x86.exe` included in the release
+3. If Windows says `VCRUNTIME140.dll` is missing, run `vc_redist.x86.exe` included in the release zip folder
 4. Run `physics-engine.exe`
  
 glew32.dll and glfw3.dll are already bundled with the release along with the textures and shaders.
@@ -32,10 +32,9 @@ The current release is built for Windows x86 and requires an OpenGL 3.3 compatib
    git clone https://github.com/shadowplayzman/physics-engine.git
 ```
 2. Open `physics-engine.slnx` in Visual Studio (2022 or newer)
-3. Dependencies (GLFW, GLEW, GLM, Dear ImGui, stb_image) are already vendored in the `external` folder, so there's nothing extra to download
+3. Dependencies (GLFW, GLEW, GLM, Dear ImGui, stb_image) are already in the `external` folder,
 4. Set the build config to `Release` and `X86`
 5. Build and run — the exe will land in the output folder alongside the required dlls
-windows only for now, since it's built and tested on 1920x1080 windows (see known issues below).
  
 ## Features
  
@@ -84,11 +83,14 @@ Most of the actual simulation control happens through the imgui windows, not key
 - stb_image
 ## Known issues
  
-- Built for 1920x1080, hasn't been adapted for other resolutions/window sizes yet, so UI scaling might look off elsewhere
+- Built for 1920x1080, hasn't been adapted for other resolutions/window sizes yet, so UI scaling might look off elsewhere,will try to fix in the next release
 - The current release is built for Windows x86
 ## Why I built this
  
 Mainly wanted to learn C++ libraries ike opengl,dearImgui. Learning the OpenGL side (matrices, model matrices, translation matrices, all of it) was probably the hardest part of the whole project. this is v1, planning to keep building on it in the future.
+
+#Future Plans 
+I have decided to make different types of sandboxes on top of existing solar system sim. For example gravity sim, Projectile motion sim you can select the planet then the select the sandbox and see how gravity or the projectile motion will work on that planet 
  
 ## Found a bug?
  
