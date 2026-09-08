@@ -90,15 +90,15 @@ void SandBoxUI::DrawSimulationWindow(SimulationSettings& settings, SimulationSta
 }
 void SandBoxUI::DrawPlanetWindow(SimulationSettings& settings, SimulationState& simulationState, Universe& universe, Camera& camera) {
     CelestialBody* body = camera.GetTargetBody();
-    double radiusPercentage = (body->radius / body->originalRadius) * 100;
-    double massPercentage = (body->mass / body->originalMass) * 100;
-    double min = 1.0;
-    double max = 500.0;
-
 
     ImGui::Begin("Planet Inspector");
 
     if (body != nullptr) {
+        double radiusPercentage = (body->radius / body->originalRadius) * 100;
+        double massPercentage = (body->mass / body->originalMass) * 100;
+        double min = 1.0;
+        double max = 500.0;
+
         ImGui::Text("Name: %s", body->Name.c_str());
         ImGui::Separator();
         ImGui::Checkbox("Preserve Density", &preserveDensity);
